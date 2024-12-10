@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.pro.framework.javatodb.config.JTDJDBCSpringConfig,\
+  com.pro.framework.javatodb.config.JTDJDBCBaseConfig,\
+  com.pro.framework.javatodb.config.JTDConfig

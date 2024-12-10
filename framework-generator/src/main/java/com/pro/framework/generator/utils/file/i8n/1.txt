@@ -1,0 +1,7 @@
+The manufacturer is stocking up and is expected to ship within 24 hours.
+The order has been shipped
+Transport from operations center to transfer station
+Transport from transfer station to branch office
+Transported from the branch to the express delivery outlet
+Deliver items by courier
+The customer has signed for this item. If the customer does not complete the order for a long time, the system will automatically confirm receipt of the order within 10 days.

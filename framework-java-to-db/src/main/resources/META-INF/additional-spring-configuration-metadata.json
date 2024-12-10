@@ -1,0 +1,36 @@
+{
+  "properties": [
+    {
+      "name": "jtd.run-on-start-up",
+      "type": "java.lang.Boolean",
+      "defaultValue": "false",
+      "description": "环境启动时自动执行一次"
+    },
+    {
+      "name": "jtd.run-type",
+      "type": "com.pro.framework.javatodb.constant.JTDConst.EnumSqlRunType",
+      "defaultValue": "com.pro.framework.javatodb.constant.EnumSqlRunType.none",
+      "description": "sql自动执行计划",
+      "hints": [
+        "none-关闭",
+        "createTable-仅新建表",
+        "createTableAndMetas-新建表和表内元素",
+        "createModifyTableAndMetas-新建和修改表和表内元素"
+      ]
+    },
+    {
+      "name": "jtd.base-packages",
+      "type": "java.lang.String[]",
+      "defaultValue": "{}",
+      "description": "基础包路径"
+    },
+    {
+      "name": "jtd.field-pattern-not-null-default-value-map",
+      "type": "java.util.Map",
+      "mapKeyType": "java.lang.String",
+      "mapValueType": "java.lang.String",
+      "defaultValue": "{}",
+      "description": "key: fieldPattern, value: defaultValueString"
+    }
+  ]
+}

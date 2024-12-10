@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.pro</groupId>
+        <artifactId>framework</artifactId>
+        <version>2.0.0</version>
+
+    </parent>
+    <artifactId>framework-java-to-db</artifactId>
+
+    <packaging>jar</packaging>
+
+    <description>实体和表字段对应,增量启动,读取数据库已有的表,一键完成,新增表,新增字段,修改字段</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.pro</groupId>
+            <artifactId>framework-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pro</groupId>
+            <artifactId>framework-java-to-db-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pro</groupId>
+            <artifactId>framework-enums</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--        <dependency>-->
+<!--            <groupId>io.swagger</groupId>-->
+<!--            <artifactId>swagger-annotations</artifactId>-->
+<!--            <version>1.5.20</version>-->
+<!--            <scope>compile</scope>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+    </dependencies>
+</project>

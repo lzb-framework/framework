@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.pro.framework.mtq.service.multiwrapper.config.BaseMultiConfig,\
+  com.pro.framework.mtq.service.multiwrapper.config.MultiConfigJsonJackson
