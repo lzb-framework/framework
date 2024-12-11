@@ -10,6 +10,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import java.util.Objects;
 
@@ -26,8 +27,8 @@ public class BaseMultiConfig {
     public static DbAdaptor multiDbAdaptor;
 
     @Bean
+    @DependsOn("objectMapper")
     public MultiClassRelationFactory multiClassRelationFactory(
-            ObjectMapper objectMapper,
             MultiProperties multiProperties,
             DbAdaptor dbAdaptor,
             ObjectProvider<IMultiClassRelationService> multiTableRelationServiceProvider
@@ -38,7 +39,6 @@ public class BaseMultiConfig {
 //        if (!multiProperties.enabled) {
 //            return null;
 //        }
-        JSONUtils.init(objectMapper);
 
         BaseMultiConfig.multiProperties = multiProperties;
         BaseMultiConfig.multiDbAdaptor = dbAdaptor;

@@ -41,13 +41,13 @@ public class JTDFieldInfoDbUtil {
                 boolean isKeyProp = jtdTable.getKeyFieldNames().contains(fieldName);
 //                boolean isKeyProp = jtdTable.getKeyFieldNames().contains(fieldName) || jtdTable.getSequences().stream().filter(s -> JTDConstInner.EnumSequenceType.UNIQUE_KEY.equals(s.getType())).flatMap(s -> s.getFieldNames().stream()).anyMatch(name -> name.equals(fieldName));
                 build.setType(JTDConst.EnumFieldType.bigint)
-                        .setMainLength(20)
+//                        .setMainLength(20)
                         .setNotNull(isKeyProp ? JTDConst.EnumFieldNullType.not_null : JTDConst.EnumFieldNullType.can_null)
                 ;
                 break;
             case "java.lang.Integer":
                 build.setType(JTDConst.EnumFieldType.int_)
-                        .setMainLength(10)
+//                        .setMainLength(10)
                         .setDefaultValue(JTDUtil.or(JTDUtil.shortNum(build.getDefaultValue()), buildDefaultValueByFieldName(fieldName, fieldPatternNotNullDefaultValueMap), "'0'"))
                 ;
                 break;

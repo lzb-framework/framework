@@ -1,5 +1,6 @@
 package com.pro.framework.javatodb.service;
 
+import com.pro.framework.api.util.JSONUtils;
 import com.pro.framework.javatodb.constant.JTDConst;
 import com.pro.framework.javatodb.model.JTDFieldInfoDb;
 import com.pro.framework.javatodb.model.JTDSqlInfo;
@@ -45,6 +46,9 @@ public class JTDTableMetaServiceFieldImpl implements JTDTableMetaService {
             // newField.setSimpleLabel(null);
             // newField.setJavaTypeEnumClass(null);
             if (isRename || !newField.equals(oldField)) {
+                if (!isRename) {
+                    log.info("属性差异 \n oldField= {} \n newField={} ", JSONUtils.toString(oldField), JSONUtils.toString(newField));
+                }
                 if (JTDUtil.isNotBlank(renameFrom) && renameFromField == null) {
                     log.error("{}表设置从旧字段{}更名为{},旧字段{}已不存在,只执行新增/修改新字段本身", tableName, fieldName, renameFrom, renameFrom);
                 }

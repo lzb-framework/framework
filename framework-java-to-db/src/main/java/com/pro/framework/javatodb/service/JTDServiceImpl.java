@@ -1,6 +1,7 @@
 package com.pro.framework.javatodb.service;
 
 import com.pro.framework.api.entity.IEntityProperties;
+import com.pro.framework.api.util.JSONUtils;
 import com.pro.framework.enums.EnumUtil;
 import com.pro.framework.javatodb.annotation.JTDField;
 import com.pro.framework.javatodb.annotation.JTDFieldSql;
@@ -130,6 +131,7 @@ public class JTDServiceImpl implements IJTDService {
             }
         }).collect(Collectors.toList());
 
+//        log.info("sqlInfosss= {}", JSONUtils.toString(sqlInfosss));
 
         //整理和过滤不执行的sql
         List<List<List<JTDSqlInfo>>> sqlInfosssExecute = sqlInfosss.stream()
