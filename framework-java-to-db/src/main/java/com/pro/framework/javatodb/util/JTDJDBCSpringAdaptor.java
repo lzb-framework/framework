@@ -1,5 +1,6 @@
 package com.pro.framework.javatodb.util;
 
+import com.pro.framework.api.structure.Tuple2;
 import lombok.AllArgsConstructor;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
@@ -44,10 +45,12 @@ public class JTDJDBCSpringAdaptor implements JTDAdaptor {
     }
     @Override
     @SneakyThrows
-    public boolean createDatabase(String dbName) {
+    public boolean createDatabase() {
         // 数据库连接信息（这里使用的是 MySQL）
         String url = dataSourceProperties.getUrl();
-        url = removeDatabaseNameFromUrl(url);
+        Tuple2<String, String> tuple2 = JTDUtil.dbUrlExtractor(url);
+        String dbName = tuple2.getT1();
+        url = tuple2.getT2();
         String user = dataSourceProperties.getUsername();
         String password = dataSourceProperties.getPassword();
 

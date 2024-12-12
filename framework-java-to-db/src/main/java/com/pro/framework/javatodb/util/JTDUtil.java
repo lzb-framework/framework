@@ -1,5 +1,8 @@
 package com.pro.framework.javatodb.util;
 
+import com.pro.framework.api.model.FrameworkException;
+import com.pro.framework.api.structure.Tuple2;
+import com.pro.framework.api.util.AssertUtil;
 import com.pro.framework.javatodb.constant.JTDConstInner;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
@@ -13,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -229,6 +233,7 @@ public class JTDUtil {
         }
         return param.substring(0, 1).toUpperCase() + param.substring(1);
     }
+
     /**
      * 首字母转换小写
      *
@@ -466,22 +471,48 @@ public class JTDUtil {
     }
 
     public static void copyProperties(Object source, Object target) {
-           Map<String, Field> targetFieldMap = Arrays.stream(target.getClass().getDeclaredFields())
-                   .collect(Collectors.toMap(Field::getName, Function.identity()));
-            int i =0;
-           Arrays.stream(source.getClass().getDeclaredFields())
-                   .filter(field -> !java.lang.reflect.Modifier.isStatic(field.getModifiers()))
-                   .forEach(sourceField -> {
-                       Field targetField = targetFieldMap.get(sourceField.getName());
-                       if (targetField != null) {
-                           sourceField.setAccessible(true);
-                           targetField.setAccessible(true);
-                           try {
-                               targetField.set(target, sourceField.get(source));
-                           } catch (IllegalAccessException e) {
-                               e.printStackTrace();
-                           }
-                       }
-                   });
-       }
+        Map<String, Field> targetFieldMap = Arrays.stream(target.getClass().getDeclaredFields())
+                .collect(Collectors.toMap(Field::getName, Function.identity()));
+        int i = 0;
+        Arrays.stream(source.getClass().getDeclaredFields())
+                .filter(field -> !java.lang.reflect.Modifier.isStatic(field.getModifiers()))
+                .forEach(sourceField -> {
+                    Field targetField = targetFieldMap.get(sourceField.getName());
+                    if (targetField != null) {
+                        sourceField.setAccessible(true);
+                        targetField.setAccessible(true);
+                        try {
+                            targetField.set(target, sourceField.get(source));
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    //"jdbc:mysql://localhost:3306/lottery2?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    //转成
+    //"jdbc:mysql://localhost:3306?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    //和 lottery2
+    public static Tuple2<String, String> dbUrlExtractor(String originalUrl) {
+
+        // 使用正则表达式匹配数据库名称
+        String regex = "jdbc:mysql://[^:]+:([0-9]+)/([^?]+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(originalUrl);
+
+        if (matcher.find()) {
+            String dbName = matcher.group(2); // 数据库名称
+            String urlWithoutDbName = originalUrl.substring(0, originalUrl.indexOf("/" + dbName)) + originalUrl.substring(originalUrl.indexOf("?")); // 没有数据库名称的URL
+
+            // 输出结果
+            System.out.println("URL: " + urlWithoutDbName);
+            System.out.println("Database Name: " + dbName);
+            return new Tuple2<>(dbName, urlWithoutDbName);
+        } else {
+            System.out.println("No match found.");
+            throw new FrameworkException("db-url error:" + originalUrl);
+//            return null;
+        }
+    }
 }

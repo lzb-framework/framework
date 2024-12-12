@@ -42,6 +42,7 @@ public class JTDServiceImpl implements IJTDService {
     private final IEntityProperties entityProperties;
     private static final JTDTable jtdTableExample = ExampleClazz.class.getAnnotation(JTDTable.class);
     private static final JTDField jtdFieldExample = ExampleClazz.class.getDeclaredFields()[0].getAnnotation(JTDField.class);
+    private static final String UNKNOWN_DATABASE_ERROR = "Unknown database ";
 
     // @Autowired
     public JTDServiceImpl(JTDProperties jtdProperties, JTDAdaptor adaptor, IEntityProperties entityProperties) {
@@ -69,25 +70,10 @@ public class JTDServiceImpl implements IJTDService {
         if (JTDConst.EnumSqlRunType.createModifyDeleteAll.equals(jtdProperties.getRunType())) {
             log.warn("初始化表结构,包含删除字段的sql语句(只在本地执行,不在生产环境上");
         }
-        try {
-            adaptor.executeQuery("select 1 from dual;", o -> {
-                try {
-                    return o.getString(1);
-                } catch (SQLException e) {
-                }
-                return null;
-            });
-        } catch (Exception e) {
-            String ERROR = "Unknown database ";
-            String message = e.getMessage();
-            if (message.startsWith(ERROR)) {
-//                    throw new RuntimeException(e);
-                String substring = message.substring(ERROR.length());
-                String dbName = substring.substring(1, substring.length() - 1);
-                boolean execute = adaptor.createDatabase(dbName);
-                AssertUtil.isTrue(execute,"create database " + dbName+" error");
-            }
-        }
+
+        // 自动建库
+        adaptor.createDatabase();
+
 
         Integer size = executeSql(jtdProperties.getBasePackages(), adaptor, currRunType, fieldPatternNotNullDefaultValueMap);
 

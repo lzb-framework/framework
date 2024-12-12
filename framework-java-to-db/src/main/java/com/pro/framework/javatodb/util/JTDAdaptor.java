@@ -13,5 +13,5 @@ public interface JTDAdaptor {
     @SneakyThrows
     boolean execute(String sql);
 
-    boolean createDatabase(String dbName);
+    boolean createDatabase();
 }
