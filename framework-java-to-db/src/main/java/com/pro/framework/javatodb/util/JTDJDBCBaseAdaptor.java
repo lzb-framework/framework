@@ -65,4 +65,29 @@ public class JTDJDBCBaseAdaptor implements JTDAdaptor {
         @Cleanup Statement stmt = conn.createStatement();
         return stmt.execute(sql);
     }
+
+    @Override
+    @SneakyThrows
+    public boolean createDatabase(String dbName) {
+        // 数据库连接信息（这里使用的是 MySQL）
+        String url = properties.getUrl();
+        url = removeDatabaseNameFromUrl(url);
+        String user = properties.getUsername();
+        String password = properties.getPassword();
+
+        // 创建数据库的 SQL 语句
+        String createDatabaseSQL = "CREATE DATABASE IF NOT EXISTS " + dbName;
+
+        @Cleanup Connection connection = DriverManager.getConnection(url, user, password);
+        @Cleanup Statement statement = connection.createStatement();
+        // 执行创建数据库的 SQL 语句
+        statement.executeUpdate(createDatabaseSQL);
+        System.out.println("Database created successfully or already exists.");
+        return false;
+    }
+
+    public static String removeDatabaseNameFromUrl(String url) {
+        // 使用正则表达式只去掉数据库名称部分（即 /lottery2）
+        return url.replaceFirst("(/[^/?]+)(?=\\?)", "");
+    }
 }

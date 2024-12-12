@@ -1,6 +1,7 @@
 package com.pro.framework.javatodb.service;
 
 import com.pro.framework.api.entity.IEntityProperties;
+import com.pro.framework.api.util.AssertUtil;
 import com.pro.framework.api.util.JSONUtils;
 import com.pro.framework.enums.EnumUtil;
 import com.pro.framework.javatodb.annotation.JTDField;
@@ -21,6 +22,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,6 +69,26 @@ public class JTDServiceImpl implements IJTDService {
         if (JTDConst.EnumSqlRunType.createModifyDeleteAll.equals(jtdProperties.getRunType())) {
             log.warn("初始化表结构,包含删除字段的sql语句(只在本地执行,不在生产环境上");
         }
+        try {
+            adaptor.executeQuery("select 1 from dual;", o -> {
+                try {
+                    return o.getString(1);
+                } catch (SQLException e) {
+                }
+                return null;
+            });
+        } catch (Exception e) {
+            String ERROR = "Unknown database ";
+            String message = e.getMessage();
+            if (message.startsWith(ERROR)) {
+//                    throw new RuntimeException(e);
+                String substring = message.substring(ERROR.length());
+                String dbName = substring.substring(1, substring.length() - 1);
+                boolean execute = adaptor.createDatabase(dbName);
+                AssertUtil.isTrue(execute,"create database " + dbName+" error");
+            }
+        }
+
         Integer size = executeSql(jtdProperties.getBasePackages(), adaptor, currRunType, fieldPatternNotNullDefaultValueMap);
 
         long end = System.currentTimeMillis();
