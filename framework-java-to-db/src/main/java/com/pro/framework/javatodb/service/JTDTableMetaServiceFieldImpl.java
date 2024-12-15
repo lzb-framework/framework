@@ -43,11 +43,15 @@ public class JTDTableMetaServiceFieldImpl implements JTDTableMetaService {
                 oldField = renameFromField;
             }
             newField.setRenameFrom(null);
+            // 没有指定chatset就不用判断charset是否一致
+            if (null == newField.getCharset()) {
+                oldField.setCharset(null);
+            }
             // newField.setSimpleLabel(null);
             // newField.setJavaTypeEnumClass(null);
             if (isRename || !newField.equals(oldField)) {
                 if (!isRename) {
-                    log.info("属性差异 \n oldField= {} \n newField={} ", JSONUtils.toString(oldField), JSONUtils.toString(newField));
+                    log.info("属性差异 {}\noldField= {} \n newField={} ",tableName, JSONUtils.toString(oldField), JSONUtils.toString(newField));
                 }
                 if (JTDUtil.isNotBlank(renameFrom) && renameFromField == null) {
                     log.error("{}表设置从旧字段{}更名为{},旧字段{}已不存在,只执行新增/修改新字段本身", tableName, fieldName, renameFrom, renameFrom);

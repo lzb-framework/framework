@@ -12,7 +12,7 @@
 
     <description>SQL多表联查工具DAO框架,不强制依赖任何jar包,推荐依赖spring-boot-starter-jdbc</description>
     <properties>
-        <java.version>11</java.version>
+<!--        <java.version>11</java.version>-->
         <!-- 文件拷贝时的编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

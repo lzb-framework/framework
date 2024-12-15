@@ -133,7 +133,7 @@ public class JTDFieldTemp implements JTDField {
 
     @Override
     public String description() {
-        return defaultValue;
+        return description;
     }
 
     @Override

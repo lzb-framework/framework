@@ -2,7 +2,6 @@ package com.pro.framework.javatodb.util;
 
 import com.pro.framework.enums.EnumUtil;
 import com.pro.framework.javatodb.constant.JTDConst;
-import com.pro.framework.javatodb.constant.JTDConstInner;
 import com.pro.framework.javatodb.model.JTDFieldInfoDb;
 import com.pro.framework.javatodb.model.JTDFieldInfoJava;
 import com.pro.framework.javatodb.model.JTDTableInfo;
@@ -306,7 +305,13 @@ public class JTDFieldInfoDbUtil {
         Integer decimalLength = null != lengths && lengths.length > 1 ? Integer.valueOf(lengths[1]) : null;
         ++currentIndex;
 
-
+        // COLLATE utf8mb4_general_ci
+        String charset = null;
+        if ("COLLATE".equals(infos[currentIndex])) {
+            charset = infos[currentIndex + 1];
+            ++currentIndex;
+            ++currentIndex;
+        }
         boolean notNull = "NOT NULL".equals(infos[currentIndex] + " " + infos[currentIndex + 1]);
         if (notNull) {
             ++currentIndex;
@@ -323,6 +328,9 @@ public class JTDFieldInfoDbUtil {
             }
             ++currentIndex;
             ++currentIndex;
+            if ("".equals(defaultValue)) {
+                defaultValue = "''";// 注解里 "''"对应空字符的情况  注解里 "" 对应没配置的情况
+            }
         }
         // else {
         //     defaultValue = "DEFAULT NULL";
@@ -333,7 +341,6 @@ public class JTDFieldInfoDbUtil {
 
         Boolean autoIncrement = fieldConfigSql.contains(" AUTO_INCREMENT");
         String label = null;
-        String charset = null;
         if (fieldConfigSql.contains("CHARACTER SET ")) {
             charset = fieldConfigSql.split("CHARACTER SET ")[1];
             charset = charset.substring(0, charset.indexOf(" "));
@@ -347,7 +354,7 @@ public class JTDFieldInfoDbUtil {
         //noinspection SwitchStatementWithTooFewBranches
         switch (type) {
             case decimal:
-                if (defaultValue.length() > 0) {
+                if (!defaultValue.isEmpty()) {
                     //删掉尾数为0的字符,结尾如果是小数点，则去掉
                     defaultValue = defaultValue.replaceAll("'", "");
                     if (JTDUtil.isNum(defaultValue)) {
