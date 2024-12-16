@@ -32,10 +32,10 @@ public class CopyProjectTest {
     @SneakyThrows
     public static void copyProject() {
         String fromProject = "Snowball";
-        String toProject = "Demo";
+        String toProject = "Homeparking";
 
         String sourcePath = "/Users/zubin/IdeaProjects/snowball";
-        String destinationPath = "/Users/zubin/IdeaProjects/Demo";
+        String destinationPath = "/Users/zubin/IdeaProjects/homeparking";
 
         String fromProjectLower = fromProject.toLowerCase();
 
@@ -48,11 +48,11 @@ public class CopyProjectTest {
 //        Thread.sleep(1000);
 
         // 3.初始化 git
-//        executeCommand(destinationPath + "/platform", getInitGitCommands("git@github.com:lzb-Demo/platform.git"));
-//        executeCommand(destinationPath + "/" + "ui-user", getInitGitCommands("git@github.com:lzb-Demo/ui-user.git"));
-//        executeCommand(destinationPath + "/" + "ui-admin", getInitGitCommands("git@github.com:lzb-Demo/ui-admin.git"));
+        executeCommand(destinationPath + "/platform", getInitGitCommands("git@github.com:lzb-homeparking/platform.git"));
+        executeCommand(destinationPath + "/" + "ui-user", getInitGitCommands("git@github.com:lzb-homeparking/ui-user.git"));
+        executeCommand(destinationPath + "/" + "ui-admin", getInitGitCommands("git@github.com:lzb-homeparking/ui-admin.git"));
 
-        //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-Demo/ui-agent.git"));
+        //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-homeparking/ui-agent.git"));
     }
 
     /**
@@ -330,7 +330,7 @@ public class CopyProjectTest {
 //            String[] commandStr = splitCommand(command);
             processBuilder.command(commands);
             Process process = processBuilder.start();
-            System.out.println((process.waitFor() == 0 ? "exe: " : "exe-fail: ") + String.join(" ", commands));
+            System.out.println((process.waitFor() == 0 ? "exe: " : "== exe-fail: ") + String.join(" ", commands));
         }
     }
 
@@ -421,7 +421,7 @@ public class CopyProjectTest {
         String suffix;
         Boolean lowercase;
         /**
-         * String fromProject = "Ai";
+         * String fromProject = "snowball";
          * String toProject = "Demo";
          * 返回指定的 正则/内容
          */
