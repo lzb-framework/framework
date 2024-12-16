@@ -490,7 +490,7 @@ public class JTDUtil {
                 });
     }
 
-    //"jdbc:mysql://localhost:3306/snowball2?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    //"jdbc:mysql://localhost:3306/demo?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     //转成
     //"jdbc:mysql://localhost:3306?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     //和 snowball2

@@ -23,19 +23,19 @@ public class CopyModuleToMain {
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //        fromPath = "/Users/fa/projects/cattle/cattle-ui-user";
-//        toPath = "/Users/fa/parent_projects/ai/snowball-ui-user";
+//        toPath = "/Users/fa/parent_projects/ai/demo-ui-user";
 //        fromGroupName = "cattle";
 //        toGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //        fromPath = "/Users/fa/projects/cattle/cattle-ui-admin";
-//        toPath = "/Users/fa/parent_projects/ai/snowball-ui-admin";
+//        toPath = "/Users/fa/parent_projects/ai/demo-ui-admin";
 //        fromGroupName = "cattle";
 //        toGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //        fromPath = "/Users/fa/projects/cattle/cattle-ui-agent";
-//        toPath = "/Users/fa/parent_projects/ai/snowball-ui-agent";
+//        toPath = "/Users/fa/parent_projects/ai/demo-ui-agent";
 //        fromGroupName = "cattle";
 //        toGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);

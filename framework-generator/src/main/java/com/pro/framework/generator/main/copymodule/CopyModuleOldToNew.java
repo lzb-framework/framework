@@ -23,13 +23,13 @@ public class CopyModuleOldToNew {
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //        fromPath = "/Users/fa/projects/like/like-ui-user";
-//        toPath = "/Users/fa/parent_projects/ai/snowball-ui-user";
+//        toPath = "/Users/fa/parent_projects/ai/demo-ui-user";
 //        fromGroupName = "like";
 //        toGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //        fromPath = "/Users/fa/projects/like/like-ui-admin";
-//        toPath = "/Users/fa/parent_projects/ai/snowball-ui-admin";
+//        toPath = "/Users/fa/parent_projects/ai/demo-ui-admin";
 //        fromGroupName = "like";
 //        toGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);

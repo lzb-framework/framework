@@ -23,14 +23,14 @@ public class CopyModuleToOld {
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //        toPath = "/Users/fa/projects/yungou/yungou-ui-user";
-//        fromPath = "/Users/fa/parent_projects/ai/snowball-ui-user";
+//        fromPath = "/Users/fa/parent_projects/ai/demo-ui-user";
 //        toGroupName = "yungou";
 //        fromGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
 //
 //
 //        toPath = "/Users/fa/projects/yungou/yungou-ui-admin";
-//        fromPath = "/Users/fa/parent_projects/ai/snowball-ui-admin";
+//        fromPath = "/Users/fa/parent_projects/ai/demo-ui-admin";
 //        toGroupName = "yungou";
 //        fromGroupName = "ai";
 //
@@ -38,7 +38,7 @@ public class CopyModuleToOld {
 //
 //
 //        toPath = "/Users/fa/projects/yungou/yungou-ui-agent";
-//        fromPath = "/Users/fa/parent_projects/ai/snowball-ui-agent";
+//        fromPath = "/Users/fa/parent_projects/ai/demo-ui-agent";
 //        toGroupName = "yungou";
 //        fromGroupName = "ai";
 //        copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);

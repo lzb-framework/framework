@@ -1,6 +1,7 @@
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.pro.framework.api.util.JSONUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -13,24 +14,28 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * 一键 新建项目,复制项目
  */
 public class CopyProjectTest {
+    @SneakyThrows
     public static void main(String[] args) {
         copyProject();
     }
+
     /**
      * --- 复制项目 ---
      */
 //    @Test
+    @SneakyThrows
     public static void copyProject() {
-        String fromProject = "Ai";
-        String toProject = "Gym";
+        String fromProject = "Snowball";
+        String toProject = "Demo";
 
-        String sourcePath = "/Users/fa/parent_projects/ai";
-        String destinationPath = "/Users/fa/parent_projects/gym";
+        String sourcePath = "/Users/zubin/IdeaProjects/snowball";
+        String destinationPath = "/Users/zubin/IdeaProjects/Demo";
 
         String fromProjectLower = fromProject.toLowerCase();
 
@@ -40,11 +45,14 @@ public class CopyProjectTest {
         // 2.修改文件夹名称,和文件内容
         changeFolder_3(destinationPath, fromProject, toProject);
 
+//        Thread.sleep(1000);
+
         // 3.初始化 git
-        executeCommand(destinationPath + "/platform", getInitGitCommands("http://112.121.167.18:8888/gym/platform"));
-        executeCommand(destinationPath + "/" + fromProjectLower + "-ui-user", getInitGitCommands("http://http://112.121.167.18:8888/gym/ui-user"));
-        executeCommand(destinationPath + "/" + fromProjectLower + "-ui-agent", getInitGitCommands("http://http://112.121.167.18:8888/gym/ui-agent"));
-        executeCommand(destinationPath + "/" + fromProjectLower + "-ui-admin", getInitGitCommands("http://http://112.121.167.18:8888/gym/ui-admin"));
+//        executeCommand(destinationPath + "/platform", getInitGitCommands("git@github.com:lzb-Demo/platform.git"));
+//        executeCommand(destinationPath + "/" + "ui-user", getInitGitCommands("git@github.com:lzb-Demo/ui-user.git"));
+//        executeCommand(destinationPath + "/" + "ui-admin", getInitGitCommands("git@github.com:lzb-Demo/ui-admin.git"));
+
+        //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-Demo/ui-agent.git"));
     }
 
     /**
@@ -54,9 +62,9 @@ public class CopyProjectTest {
         // 忽略的文件夹
         String[] relativeFoldersToIgnore = {
                 "platform/.git",
-                fromProjectLower + "-ui-user/.git",
-                fromProjectLower + "-ui-agent/.git",
-                fromProjectLower + "-ui-admin/.git",
+                "ui-user/.git",
+//                "ui-agent/.git",
+                "ui-admin/.git",
         };
         String[] nameFoldersToIgnore = {"node_modules", "target", "logs", "dist", ".idea"};
 
@@ -76,41 +84,41 @@ public class CopyProjectTest {
 //            }
 //        }
 
-        public static void renameFilesAndFolders(File dir, String oldString, String newString) {
-            // List all files and directories in the current directory
-            File[] files = dir.listFiles();
+    public static void renameFilesAndFolders(File dir, String oldString, String newString) {
+        // List all files and directories in the current directory
+        File[] files = dir.listFiles();
 
-            // Traverse subdirectories first
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        renameFilesAndFolders(file, oldString, newString);
+        // Traverse subdirectories first
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    renameFilesAndFolders(file, oldString, newString);
+                }
+            }
+
+            // Rename files
+            for (File file : files) {
+                if (file.isFile() && file.getName().contains(oldString)) {
+                    String newName = file.getName().replace(oldString, newString);
+                    File newFile = new File(file.getParent(), newName);
+                    if (!file.renameTo(newFile)) {
+                        System.out.println("Failed to rename file: " + file.getAbsolutePath());
                     }
                 }
+            }
 
-                // Rename files
-                for (File file : files) {
-                    if (file.isFile() && file.getName().contains(oldString)) {
-                        String newName = file.getName().replace(oldString, newString);
-                        File newFile = new File(file.getParent(), newName);
-                        if (!file.renameTo(newFile)) {
-                            System.out.println("Failed to rename file: " + file.getAbsolutePath());
-                        }
-                    }
-                }
-
-                // Rename directories
-                for (File file : files) {
-                    if (file.isDirectory() && file.getName().contains(oldString)) {
-                        String newName = file.getName().replace(oldString, newString);
-                        File newDir = new File(file.getParent(), newName);
-                        if (!file.renameTo(newDir)) {
-                            System.out.println("Failed to rename directory: " + file.getAbsolutePath());
-                        }
+            // Rename directories
+            for (File file : files) {
+                if (file.isDirectory() && file.getName().contains(oldString)) {
+                    String newName = file.getName().replace(oldString, newString);
+                    File newDir = new File(file.getParent(), newName);
+                    if (!file.renameTo(newDir)) {
+                        System.out.println("Failed to rename directory: " + file.getAbsolutePath());
                     }
                 }
             }
         }
+    }
 
 
     /**
@@ -131,7 +139,10 @@ public class CopyProjectTest {
 
                 new Reg("User", ""),
                 new Reg("UserMoney", ""),
-                new Reg("UserLevel", ""),
+                new Reg("UserAmountTotal", ""),
+                new Reg("UserLevelConfig", ""),
+                new Reg("EnumAuthRoute", ""),
+                new Reg("Enum", "Product"),
                 new Reg("Agent", "")
         );
 
@@ -182,6 +193,7 @@ public class CopyProjectTest {
 
         replaceContentMap.put("Enum([a-zA-Z]+)" + fromProject, "Enum$1" + toProject);
         replaceContentMap.put("enum([a-zA-Z]+)" + fromProject, "enum$1" + toProject);
+        replaceContentMap.put(fromProject + "([a-zA-Z]+)", toProject + "$1");
         return replaceContentMap;
     }
 
@@ -306,14 +318,19 @@ public class CopyProjectTest {
      * 执行系统指令
      */
     @SneakyThrows
-    private static void executeCommand(String workingDirectory, String[] commands) {
+    private static void executeCommand(String workingDirectory, String[][] commandss) {
         ProcessBuilder processBuilder = new ProcessBuilder();
+        Map<String, String> environment = processBuilder.environment();
+        // 确保环境中有正确的 PATH
+        environment.put("PATH", "/usr/bin:/usr/local/bin:" + System.getenv("PATH"));
         File directory = new File(workingDirectory);
+        System.out.println("Current PATH: " + environment.get("PATH"));
         processBuilder.directory(directory);
-        for (String command : commands) {
-            processBuilder.command(splitCommand(command));
+        for (String[] commands : commandss) {
+//            String[] commandStr = splitCommand(command);
+            processBuilder.command(commands);
             Process process = processBuilder.start();
-            System.out.println(process.waitFor() == 0 ? "exe: " : "exe-fail: " + command);
+            System.out.println((process.waitFor() == 0 ? "exe: " : "exe-fail: ") + String.join(" ", commands));
         }
     }
 
@@ -385,13 +402,15 @@ public class CopyProjectTest {
     }
 
 
-    private static String[] getInitGitCommands(String gitUrl) {
+    private static String[][] getInitGitCommands(String gitUrl) {
+
         // 初始化git
-        return new String[]{
-                "git init",
-                "git remote set-url origin " + gitUrl,
-                "\ngit push -u origin --all" +
-                        "\ngit push origin --tags"
+        return new String[][]{
+                {"/bin/sh", "-c", "git init"},
+                {"/bin/sh", "-c", "git remote add origin " + gitUrl},
+                {"/bin/sh", "-c", "git remote set-url origin " + gitUrl},
+                {"/bin/sh", "-c", "git push -u origin --all "},
+                {"/bin/sh", "-c", "git push origin --tags "},
         };
     }
 

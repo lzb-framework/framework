@@ -33,8 +33,8 @@ public class CopyModuleMultiple {
 
     private static void copy(String toGroupName) {
         String moduleName = "payChannel".toUpperCase();
-        String fromPath = "/Users/fa/projectnew/snowball/snowball-ui-admin/src/views/pay";
-        String toPath = "/Users/fa/projectnew/snowball/snowball-ui-admin/src/views/sys";
+        String fromPath = "/Users/fa/projectnew/snowball/demo-ui-admin/src/views/pay";
+        String toPath = "/Users/fa/projectnew/snowball/demo-ui-admin/src/views/sys";
         String fromGroupName = "payChannel";
         copyFiles(moduleName, fromGroupName, toGroupName, fromPath, toPath);
     }
