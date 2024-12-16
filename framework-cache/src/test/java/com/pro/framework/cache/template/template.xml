@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<template>
-    <if test="name != null">
-        Name: ${name}
-    </if>
-    <foreach item="item" collection="list">
-        Item: ${item}
-    </foreach>
-</template>

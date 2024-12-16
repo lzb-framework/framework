@@ -490,10 +490,10 @@ public class JTDUtil {
                 });
     }
 
-    //"jdbc:mysql://localhost:3306/lottery2?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    //"jdbc:mysql://localhost:3306/snowball2?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
     //转成
     //"jdbc:mysql://localhost:3306?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
-    //和 lottery2
+    //和 snowball2
     public static Tuple2<String, String> dbUrlExtractor(String originalUrl) {
 
         // 使用正则表达式匹配数据库名称

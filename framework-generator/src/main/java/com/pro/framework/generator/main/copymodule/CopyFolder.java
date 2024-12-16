@@ -16,7 +16,7 @@ public class CopyFolder {
 //        String moduleName = "SysMsg".toUpperCase();
 //
 //
-//        String fromPath = "/Users/fa/parent_projects/ai/lottery-ui-admin/src/parent-ui";
+//        String fromPath = "/Users/fa/parent_projects/ai/snowball-ui-admin/src/parent-ui";
 //        String toPath = "/Users/fa/parent_projects/store/store-ui-admin/src/parent-ui";
 //        copyFiles(fromPath, toPath);
 //    }

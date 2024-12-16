@@ -90,7 +90,7 @@ public class JTDJDBCBaseAdaptor implements JTDAdaptor {
     }
 
     public static String removeDatabaseNameFromUrl(String url) {
-        // 使用正则表达式只去掉数据库名称部分（即 /lottery2）
+        // 使用正则表达式只去掉数据库名称部分（即 /snowball2）
         return url.replaceFirst("(/[^/?]+)(?=\\?)", "");
     }
 }

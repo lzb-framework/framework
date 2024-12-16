@@ -17,7 +17,7 @@ public class DeleteModuleMain {
 //        String moduleName = "spy.properties";
 //
 //
-//        String fromPath = "/Users/fa/projectnew/lottery";
+//        String fromPath = "/Users/fa/projectnew/snowball";
 //        deleteFiles(moduleName, fromPath);
 //
 //    }
