@@ -11,8 +11,7 @@ public class CSSFileSplitter {
      * 而不包含[data-v-xxxxxxx]后缀的样式则保存到common.css文件中。
      */
 //    public static void main(String[] args) {
-//        String path = "/Users/fa/parent_projects/...";
-////        String path = "/Users/fa/parent_projects/store/parent/framework/framework-generator/src/main/java/com/pro/utils/file/css/";
+////        String path = "/Users/zubin/parent_projects/store/parent/framework/framework-generator/src/main/java/com/pro/utils/file/css/";
 //
 //        try {
 //            BufferedReader reader = new BufferedReader(new FileReader(path + "input.css"));
