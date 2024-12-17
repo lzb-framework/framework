@@ -32,10 +32,10 @@ public class CopyProjectTest {
     @SneakyThrows
     public static void copyProject() {
         String fromProject = "Snowball";
-        String toProject = "Homeparking";
+        String toProject = "Demo";
 
         String sourcePath = "/Users/zubin/IdeaProjects/snowball";
-        String destinationPath = "/Users/zubin/IdeaProjects/homeparking";
+        String destinationPath = "/Users/zubin/IdeaProjects/demo";
 
         String fromProjectLower = fromProject.toLowerCase();
 
@@ -48,11 +48,11 @@ public class CopyProjectTest {
 //        Thread.sleep(1000);
 
         // 3.初始化 git
-        executeCommand(destinationPath + "/platform", getInitGitCommands("git@github.com:lzb-homeparking/platform.git"));
-        executeCommand(destinationPath + "/" + "ui-user", getInitGitCommands("git@github.com:lzb-homeparking/ui-user.git"));
-        executeCommand(destinationPath + "/" + "ui-admin", getInitGitCommands("git@github.com:lzb-homeparking/ui-admin.git"));
+        executeCommand(destinationPath + "/platform", getInitGitCommands("git@github.com:lzb-demo/platform.git"));
+        executeCommand(destinationPath + "/" + "ui-user", getInitGitCommands("git@github.com:lzb-demo/ui-user.git"));
+        executeCommand(destinationPath + "/" + "ui-admin", getInitGitCommands("git@github.com:lzb-demo/ui-admin.git"));
 
-        //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-homeparking/ui-agent.git"));
+        //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-demo/ui-agent.git"));
     }
 
     /**
