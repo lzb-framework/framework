@@ -15,6 +15,7 @@ import com.pro.framework.javatodb.model.*;
 import com.pro.framework.javatodb.util.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -35,8 +36,10 @@ import java.util.stream.Collectors;
  * @author administrator
  */
 @Slf4j
+@Getter
 public class JTDServiceImpl implements IJTDService {
 
+    private final Integer sort = 1;
     private final JTDProperties jtdProperties;
     private final JTDAdaptor adaptor;
     private final IEntityProperties entityProperties;
@@ -68,7 +71,7 @@ public class JTDServiceImpl implements IJTDService {
         log.info("初始化表结构开始");
         long start = System.currentTimeMillis();
         if (JTDConst.EnumSqlRunType.createModifyDeleteAll.equals(jtdProperties.getRunType())) {
-            log.warn("初始化表结构,包含删除字段的sql语句(只在本地执行,不在生产环境上");
+            log.warn("初始化表结构,包含删除字段的sql语句(只在本地执行,不在生产环境上)");
         }
 
         // 自动建库
