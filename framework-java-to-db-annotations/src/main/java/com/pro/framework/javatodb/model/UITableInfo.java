@@ -25,7 +25,7 @@ import java.util.Map;
  * //     search: {},
  * //     tableColumn: {
  * //       fieldName: null,
- * //       simpleLabel: null,
+ * //       label: null,
  * //       uiType: null,
  * //     },
  * //     form: {},

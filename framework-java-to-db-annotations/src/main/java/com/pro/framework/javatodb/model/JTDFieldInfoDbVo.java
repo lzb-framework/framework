@@ -18,10 +18,6 @@ public class JTDFieldInfoDbVo implements Serializable {
      * 字段中文名 + 枚举值说明
      */
     private String label;
-    /**
-     * 字段中文名
-     */
-    private String simpleLabel;
 
     /**
      * 数据库数据类型

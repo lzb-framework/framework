@@ -179,10 +179,10 @@ public abstract class AbsGenerator {
 
         JSONObject jsonObject = new JSONObject();
         //属性(字段)信息
-        String simpleLabel = f.getSimpleLabel();
+        String label = f.getLabel();
         jsonObject.set("columnName", columnName);
         jsonObject.set("type", f.getType().getValue());
-        jsonObject.set("label", simpleLabel);
+        jsonObject.set("label", f.getLabel());
         jsonObject.set("notNull", JTDConst.EnumFieldNullType.not_null.equals(f.getNotNull()));
         jsonObject.set("defaultValue", getDefaultValue(f.getDefaultValue(), f.getType()));
         if (f.getJavaTypeEnumClass() != null) {
@@ -199,7 +199,7 @@ public abstract class AbsGenerator {
 
         if (JTDConst.EnumFieldUiType.relationCode.equals(uiType)) {
             //去掉结尾的'Code'和'编号'
-            jsonObject.set("label", simpleLabel.replace("编号", ""));
+            jsonObject.set("label", label.replace("编号", ""));
             relationCodeHeads.add(columnName.substring(0, columnName.length() - 4));
         }
         return jsonObject;

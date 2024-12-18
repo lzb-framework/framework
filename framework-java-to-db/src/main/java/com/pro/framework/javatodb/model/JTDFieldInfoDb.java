@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 @ToString
 public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
 
+    public static final String LABEL_DESC_SPLIT = ";";
     /**
      * 字段名
      */
@@ -37,10 +38,6 @@ public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
      * 字段中文名 + 枚举值说明
      */
     private String label;
-    /**
-     * 字段中文名
-     */
-    private String simpleLabel;
 
     /**
      * 数据库数据类型
@@ -128,13 +125,13 @@ public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
      */
     private Integer sort;
     /**
-      * 是否不可编辑
-      */
-     private Boolean disabled;
+     * 是否不可编辑
+     */
+    private Boolean disabled;
     /**
-      * 描述
-      */
-     private String description;
+     * 描述
+     */
+    private String description;
     /**
      * 对应哪个实体类(的主键)
      */
@@ -165,7 +162,7 @@ public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
                 toSql_default(JTDConst.EnumFieldNullType.not_null.equals(notNull), defaultValue, tableName, fieldName),
                 (autoIncrement ? "AUTO_INCREMENT" : ""),
                 (null != charset ? "CHARACTER SET " + charset : ""),
-                JTDUtil.format("COMMENT ''{0}''", ClientPreparedQueryBindings.escapeSqlSpecialChar(label))
+                JTDUtil.format("COMMENT ''{0}''", ClientPreparedQueryBindings.escapeSqlSpecialChar(JTDUtil.or(label,"") + LABEL_DESC_SPLIT + JTDUtil.or(description,"")))
         ).filter(JTDUtil::isNotBlank).collect(Collectors.joining(" "));
     }
 

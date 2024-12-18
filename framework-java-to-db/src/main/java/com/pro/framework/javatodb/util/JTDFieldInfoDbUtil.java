@@ -13,6 +13,8 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.pro.framework.javatodb.model.JTDFieldInfoDb.LABEL_DESC_SPLIT;
+
 @Slf4j
 public class JTDFieldInfoDbUtil {
     public static final Set<Class<?>> AUTO_INCREASE_TYPE = new HashSet<>(Arrays.asList(Long.class, Integer.class));
@@ -106,9 +108,9 @@ public class JTDFieldInfoDbUtil {
 //                    }
                     //noinspection unchecked,rawtypes
                     Map<Serializable, String> nameLabelMap = EnumUtil.getNameLabelMap((Class) javaType);
-                    String IEnumStr = nameLabelMap
+                    String iEnumStr = nameLabelMap
                             .entrySet().stream().map(e -> JTDUtil.isNotBlank(e.getValue()) ? (e.getKey() + "-" + e.getValue()) : e.getKey().toString()).collect(Collectors.joining(" "));
-                    build.setLabel(build.getLabel() + " " + JTDUtil.sub(IEnumStr, 400));
+                    build.setLabel(build.getLabel());
                     //若枚举没指定默认值，取第一个做默认值
                     build.setDefaultValue(JTDUtil.or(build.getDefaultValue(), "'" + nameLabelMap.keySet().iterator().next().toString()) + "'");
                 } else {
@@ -133,7 +135,7 @@ public class JTDFieldInfoDbUtil {
                 .setSortable(JTDUtil.or(java.getSortable(), build.getSortable()))
                 .setSort(orInt(java.getSort(), build.getSort()))
                 .setDisabled(JTDUtil.or(java.getDisabled(), build.getDisabled()))
-                .setSimpleLabel(JTDUtil.or(java.getSimpleLabel(), java.getPropName()))
+                .setLabel(JTDUtil.or(java.getLabel(), java.getPropName()))
                 .setJavaTypeEnumClass(java.getJavaTypeEnumClass())
                 .setJavaTypeEnumClassMultiple(java.getJavaTypeEnumClassMultiple())
                 .setType(type)
@@ -145,6 +147,7 @@ public class JTDFieldInfoDbUtil {
                 .setCharset(JTDUtil.or(java.getCharset(), build.getCharset()))
                 .setAutoIncrement(idFields.contains(fieldName) && AUTO_INCREASE_TYPE.contains(javaType) ? java.getAutoIncrement() : false)
                 .setDefaultValue(JTDUtil.or(appendDefault(java.getDefaultValue()), appendDefault(build.getDefaultValue()), buildDefaultValueByFieldName(fieldName, fieldPatternNotNullDefaultValueMap)).trim())
+                .setDescription(appendDescription(java.getDescription(), java.getJavaType()));
         ;
         switch (type) {
             case longtext:
@@ -340,15 +343,21 @@ public class JTDFieldInfoDbUtil {
 //        }
 
         Boolean autoIncrement = fieldConfigSql.contains(" AUTO_INCREMENT");
-        String label = null;
         if (fieldConfigSql.contains("CHARACTER SET ")) {
             charset = fieldConfigSql.split("CHARACTER SET ")[1];
             charset = charset.substring(0, charset.indexOf(" "));
         }
+        String label = null;
+        String description = "";
         if (fieldConfigSql.contains("COMMENT '")) {
             String commentLast = fieldConfigSql.split("COMMENT '")[1];
             label = commentLast.substring(0, commentLast.lastIndexOf("'"));
             label = label.replaceAll("''", "'");
+            int index = label.indexOf(LABEL_DESC_SPLIT);
+            if (index >= 0) {
+                description = label.substring(index + 1);
+                label = label.substring(0, index);
+            }
         }
 
         //noinspection SwitchStatementWithTooFewBranches
@@ -368,6 +377,7 @@ public class JTDFieldInfoDbUtil {
         JTDFieldInfoDb fieldInfo = new JTDFieldInfoDb();
         fieldInfo.setFieldName(JTDUtil.toUnderlineCase(fieldName));
         fieldInfo.setLabel(label);
+        fieldInfo.setDescription(description);
         fieldInfo.setType(type);
         fieldInfo.setMainLength(mainLength);
         fieldInfo.setDecimalLength(decimalLength);
@@ -378,5 +388,28 @@ public class JTDFieldInfoDbUtil {
         fieldInfo.setRenameFrom(renameFrom);
         // sql 转 sql配置项
         return fieldInfo;
+    }
+
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static String appendDescription(String description, Class javaType) {
+        if (null != description && !description.isEmpty()) {
+            return description;
+        }
+        StringBuilder valueLabel = new StringBuilder();
+        if (javaType.isEnum()) {
+            valueLabel = new StringBuilder(javaType.getSimpleName() + " ");
+            Map<Serializable, String> map = EnumUtil.getNameLabelMap(javaType);
+            for (Serializable key : map.keySet()) {
+                String value = map.get(key);
+                valueLabel.append(" ").append(key).append("-").append(value);
+            }
+        } else if (javaType.equals(Boolean.class)) {
+//            if (label != null && !(label.contains("0") && label.contains("1"))) {
+//                valueLabel.append("0-否 1-是");
+//            }
+        }
+        return JTDUtil.sub(valueLabel.toString(), 512);
+//        return JTDUtil.append(" ", label, valueLabel.substring(0, Math.min(valueLabel.length(), 512)), description);
     }
 }

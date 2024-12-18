@@ -1,8 +1,6 @@
 package com.pro.framework.javatodb.service;
 
 import com.pro.framework.api.entity.IEntityProperties;
-import com.pro.framework.api.util.AssertUtil;
-import com.pro.framework.api.util.JSONUtils;
 import com.pro.framework.enums.EnumUtil;
 import com.pro.framework.javatodb.annotation.JTDField;
 import com.pro.framework.javatodb.annotation.JTDFieldSql;
@@ -23,7 +21,6 @@ import org.springframework.core.annotation.AnnotationUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -97,7 +94,6 @@ public class JTDServiceImpl implements IJTDService {
         // });
         tableInfosInCode.stream().flatMap(t -> t.getFields().stream()).forEach(f -> {
             //无需对比(数据库肯定没有的属性),不重要的属性,忽略
-            f.setSimpleLabel(null);
             f.setJavaTypeEnumClass(null);
             f.setJavaTypeEnumClassMultiple(null);
             f.setUiType(null);
@@ -311,8 +307,7 @@ public class JTDServiceImpl implements IJTDService {
                     fieldInfo.setJavaTypeEnumClass(JTDUtil.or((Object.class.equals(annotationField.getJavaTypeEnumClass()) ? null : annotationField.getJavaTypeEnumClass()), field.getType().isEnum() ? field.getType() : null));
                     fieldInfo.setJavaTypeEnumClassMultiple(annotationField.getJavaTypeEnumClassMultiple());
                     fieldInfo.setFieldName(defaultNull(annotationField.fieldName()));
-                    fieldInfo.setLabel(appendLabel(annotationField.getLabel(), annotationField.getDescription(), field.getType()));
-                    fieldInfo.setSimpleLabel(defaultNull(annotationField.getLabel()));
+                    fieldInfo.setLabel(defaultNull(annotationField.getLabel()));
                     fieldInfo.setType(defaultNull(annotationField.type()));
                     fieldInfo.setUiType(defaultNull(annotationField.uiType()));
                     fieldInfo.setMainLength(defaultNull(annotationField.mainLength()));
@@ -332,7 +327,7 @@ public class JTDServiceImpl implements IJTDService {
                     fieldInfo.setSortable(defaultNull(annotationField.sortable()));
                     fieldInfo.setSort(defaultNull(annotationField.sort()));
                     fieldInfo.setDisabled(defaultNull(annotationField.disabled()));
-                    fieldInfo.setDescription(defaultNull(annotationField.description()));
+                    fieldInfo.setDescription(defaultNull(annotationField.getDescription()));
                     return JTDFieldInfoDbUtil.init(
                             jtdTable,
                             fieldInfo,
@@ -349,27 +344,6 @@ public class JTDServiceImpl implements IJTDService {
         return fields;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private static String appendLabel(String label, String description, Class javaType) {
-        if (null != description && !description.isEmpty()) {
-            return description;
-        }
-        StringBuilder valueLabel = new StringBuilder();
-        if (javaType.isEnum()) {
-            valueLabel = new StringBuilder(javaType.getSimpleName() + " ");
-            Map<Serializable, String> map = EnumUtil.getNameLabelMap(javaType);
-            for (Serializable key : map.keySet()) {
-                String value = map.get(key);
-                valueLabel.append(" ").append(key).append("-").append(value);
-            }
-        } else if (javaType.equals(Boolean.class)) {
-//            if (label != null && !(label.contains("0") && label.contains("1"))) {
-//                valueLabel.append("0-否 1-是");
-//            }
-        }
-        return JTDUtil.append(" ", label, valueLabel.substring(0, Math.min(valueLabel.length(), 512)));
-//        return JTDUtil.append(" ", label, valueLabel.substring(0, Math.min(valueLabel.length(), 512)), description);
-    }
 
 
     private static JTDTableTemp getTableAnnotation(Class<?> entityClass) {

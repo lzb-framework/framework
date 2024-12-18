@@ -459,7 +459,7 @@ public class JTDUtil {
 
     public static String sub(String str, int size) {
         if (str == null) {
-            return null;
+            return "";
         }
         return str.substring(0, Math.min(str.length(), size));
     }

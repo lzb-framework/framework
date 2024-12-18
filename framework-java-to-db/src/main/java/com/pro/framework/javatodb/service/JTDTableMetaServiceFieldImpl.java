@@ -47,7 +47,6 @@ public class JTDTableMetaServiceFieldImpl implements JTDTableMetaService {
             if (null == newField.getCharset() && null != oldField) {
                 oldField.setCharset(null);
             }
-            // newField.setSimpleLabel(null);
             // newField.setJavaTypeEnumClass(null);
             if (isRename || !newField.equals(oldField)) {
                 if (!isRename) {
