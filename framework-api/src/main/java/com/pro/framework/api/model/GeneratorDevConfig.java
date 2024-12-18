@@ -1,4 +1,4 @@
-package com.pro.framework.generator.main.generator;
+package com.pro.framework.api.model;
 
 import lombok.Data;
 
@@ -6,4 +6,5 @@ import lombok.Data;
 public class GeneratorDevConfig {
     private String workspace;
     private String platformName;
+    private String platformNameUpperFirst;
 }

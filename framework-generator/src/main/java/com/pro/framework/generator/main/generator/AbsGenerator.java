@@ -1,4 +1,4 @@
-package com.pro.framework.generator.utils;
+package com.pro.framework.generator.main.generator;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;

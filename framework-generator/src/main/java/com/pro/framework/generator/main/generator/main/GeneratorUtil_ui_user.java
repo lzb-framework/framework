@@ -1,7 +1,7 @@
-package com.pro.framework.generator.main.generator;
+package com.pro.framework.generator.main.generator.main;
 
 import cn.hutool.core.util.StrUtil;
-import com.pro.framework.generator.utils.AbsGenerator;
+import com.pro.framework.generator.main.generator.AbsGenerator;
 
 import java.util.Arrays;
 import java.util.List;

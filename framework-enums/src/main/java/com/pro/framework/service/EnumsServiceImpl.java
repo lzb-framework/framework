@@ -4,10 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import com.pro.framework.EnumProperties;
 import com.pro.framework.api.entity.IEntityProperties;
-import com.pro.framework.api.enums.EnumToDbEnum;
-import com.pro.framework.api.enums.IEnumToDbDb;
-import com.pro.framework.api.enums.IEnumToDbEnum;
-import com.pro.framework.api.enums.IEnumsService;
+import com.pro.framework.api.enums.*;
 import com.pro.framework.api.util.AssertUtil;
 import com.pro.framework.api.util.BeanUtils;
 import com.pro.framework.api.util.CollUtils;
@@ -23,10 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +42,9 @@ public class EnumsServiceImpl implements IEnumsService {
     public void executeSql() {
         EnumConstant.load(enumProperties);
         Class<IEnumToDbEnum> intf = IEnumToDbEnum.class;
-        Set<Class> enumClasses = EnumConstant.simpleNameClassMapNoReplace.values().stream().filter(intf::isAssignableFrom).collect(Collectors.toSet());
+        List<Class> enumClasses = EnumConstant.simpleNameClassMapNoReplace.values().stream().filter(intf::isAssignableFrom)
+                .sorted(Comparator.comparing(c -> null == c.getAnnotation(EnumOrder.class) ? 100 : c.getAnnotation(EnumOrder.class).value()))
+                .collect(Collectors.toList());
         enumClasses.forEach(enumClass -> {
             // 读取枚举实例,入库
             try {
@@ -122,6 +118,10 @@ public class EnumsServiceImpl implements IEnumsService {
         if (!updates.isEmpty()) {
             log.info("枚举入库 {} 修改:{} {}", enumClass, updates.size(), updates.stream().map(ENTITY::getEnumToDbCode).collect(Collectors.joining(",")));
         }
+        enumDatas.stream().filter(e->e.getEnumToDbCode().contains("count")).findAny().ifPresent(enumData -> {
+            log.info("枚举入库 count {}", enumClass);
+        });
+        int i = 0;
     }
 
     /**

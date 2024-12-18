@@ -1,7 +1,7 @@
 //package com.pro.framework.generator.main.generator;
 //
 //
-//import com.pro.framework.generator.utils.AbsGenerator;
+//import com.pro.framework.generator.main.generator.AbsGenerator;
 //
 //import java.util.Arrays;
 //import java.util.List;

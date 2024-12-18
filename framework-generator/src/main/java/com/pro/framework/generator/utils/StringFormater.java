@@ -1,5 +1,7 @@
 package com.pro.framework.generator.utils;
 
+import lombok.SneakyThrows;
+
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.HashMap;
@@ -16,7 +18,7 @@ public class StringFormater {
 //    }
 
     // 格式化字符串，根据占位符解析字段
-    public static String format(String template, Object object) throws Exception {
+    public static String format(String template, Object object){
         StringBuilder result = new StringBuilder(template);
 
         // 使用正则表达式查找 {field} 样式的占位符
@@ -37,7 +39,8 @@ public class StringFormater {
     }
 
     // 获取嵌套对象的字段值
-    public static Object getFieldValue(Object object, String[] parts, int index) throws IllegalAccessException {
+    @SneakyThrows
+    public static Object getFieldValue(Object object, String[] parts, int index){
         if (object == null || index >= parts.length) {
             return null;
         }
