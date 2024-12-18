@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import demoUserForm from './demoUserForm'
+import demoUserForm from './demoUserFormVue.vue'
 
 export default {
   name: "demoUserListVue",

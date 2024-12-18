@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class CacheTestsSingle {
     @Autowired
-    private DemoService demoService;
+    private CacheTestService demoService;
     @Autowired
     private CaffeineCacheManager cacheManagerLocal;
     @Autowired
