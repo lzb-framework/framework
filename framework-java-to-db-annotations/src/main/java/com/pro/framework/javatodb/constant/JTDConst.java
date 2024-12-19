@@ -84,6 +84,7 @@ public class JTDConst implements IConst {
         file("文件"),
         strs("字符串数组"),
         json("json对象"),
+        xml("xml文本"),
         ;
         private String label;
     }

@@ -42,9 +42,9 @@ public class SerializedLambdaData {
     @SneakyThrows
     public SerializedLambdaData(SerializedLambda serializedLambda) {
         //实体类
-        clazz = OtherUtil.toClassConfident(serializedLambda.getImplClass().replaceAll("/", "."));
+        clazz = OtherUtil.toClassConfident(serializedLambda.getImplClass().replaceAll("/", ".").replaceAll("\\\\", "."));
         //去掉"get",首字母小写
         propName = StrUtils.firstToLowerCase(serializedLambda.getImplMethodName().substring(3));
-        propReturnType = OtherUtil.toClassConfident(serializedLambda.getImplMethodSignature().substring(3, serializedLambda.getImplMethodSignature().indexOf(";")).replaceAll("/", "."));
+        propReturnType = OtherUtil.toClassConfident(serializedLambda.getImplMethodSignature().substring(3, serializedLambda.getImplMethodSignature().indexOf(";")).replaceAll("/", ".").replaceAll("\\\\", "."));
     }
 }

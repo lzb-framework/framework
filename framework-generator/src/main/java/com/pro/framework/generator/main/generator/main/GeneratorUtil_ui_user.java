@@ -3,6 +3,7 @@ package com.pro.framework.generator.main.generator.main;
 import cn.hutool.core.util.StrUtil;
 import com.pro.framework.generator.main.generator.AbsGenerator;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,11 +28,11 @@ public class GeneratorUtil_ui_user extends AbsGenerator {
         //2.用 demoUserFormVue.vue.vm 生成 xxx.vue 用户端页面代码
         generate(classes,
                 "/Users/fa/parent_projects/ai/parent/framework/framework-generator/src/main/resources/templates/demoUserFormVue.vue",
-                (clazz) -> "/Users/fa/parent_projects/ai/gym-ui-user/src/views/" + getModule(clazz, "sys") + "/" + StrUtil.lowerFirst(clazz.getSimpleName()) + "UserForm.vue"
+                (clazz) -> "/Users/fa/parent_projects/ai/gym-ui-user/src/views/" + getModule(clazz, "sys") + File.separator + StrUtil.lowerFirst(clazz.getSimpleName()) + "UserForm.vue"
         );
         generate(classes,
                 "/Users/fa/parent_projects/ai/parent/framework/framework-generator/src/main/resources/templates/demoUserListVue.vue",
-                (clazz) -> "/Users/fa/parent_projects/ai/gym-ui-user/src/views/" + getModule(clazz, "sys") + "/" + StrUtil.lowerFirst(clazz.getSimpleName()) + "UserList.vue"
+                (clazz) -> "/Users/fa/parent_projects/ai/gym-ui-user/src/views/" + getModule(clazz, "sys") + File.separator + StrUtil.lowerFirst(clazz.getSimpleName()) + "UserList.vue"
         );
     }
 }

@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
  */
 public abstract class AbsGenerator {
 
+    // 改成支持windows的
     private static final String templateBasePath = "/Users/Shared/generate/templates";
     public static String DEMO_NAME = "Demo";
     private static VelocityEngine velocityEngine;

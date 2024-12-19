@@ -29,7 +29,7 @@ public class GeneratorUtil_class_platform extends AbsGenerator {
         // 复制生成 service
         generateInSamePath(classes, StringFormater.format("{workspace}/{platformName}/platform/{platformName}-common/src/main/java/com/pro/{platformName}/common/service/DemoService.java", generatorConfig));
         // 复制生成 admin controller
-        generateInSamePath(classes, StringFormater.format("{workspace}/{platformName}/platform/{platformName}-admin/src/main/java/com/pro/{platformName}/admin/controller/AdminDemoController.java", generatorConfig));
+//        generateInSamePath(classes, StringFormater.format("{workspace}/{platformName}/platform/{platformName}-admin/src/main/java/com/pro/{platformName}/admin/controller/AdminDemoController.java", generatorConfig));
 
 //        //复制生成 user controller
 //        generateInSamePath(classes, "/Users/fa/parent_projects/ai/platform/gym-user/src/main/java/com/pro/ai/user/controller/UserDemoController.java");

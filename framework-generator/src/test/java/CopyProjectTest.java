@@ -48,9 +48,9 @@ public class CopyProjectTest {
 //        Thread.sleep(1000);
 
         // 3.初始化 git
-        executeCommand(destinationPath + "/platform", getInitGitCommands("git@github.com:lzb-demo/platform.git"));
-        executeCommand(destinationPath + "/" + "ui-user", getInitGitCommands("git@github.com:lzb-demo/ui-user.git"));
-        executeCommand(destinationPath + "/" + "ui-admin", getInitGitCommands("git@github.com:lzb-demo/ui-admin.git"));
+        executeCommand(destinationPath + File.separator + "platform", getInitGitCommands("git@github.com:lzb-demo/platform.git"));
+        executeCommand(destinationPath + File.separator + "ui-user", getInitGitCommands("git@github.com:lzb-demo/ui-user.git"));
+        executeCommand(destinationPath + File.separator + "ui-admin", getInitGitCommands("git@github.com:lzb-demo/ui-admin.git"));
 
         //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-demo/ui-agent.git"));
     }

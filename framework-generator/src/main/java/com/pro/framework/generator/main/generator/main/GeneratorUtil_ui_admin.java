@@ -9,6 +9,7 @@ import com.pro.framework.generator.main.generator.AbsGenerator;
 import com.pro.framework.generator.utils.StringFormater;
 import lombok.SneakyThrows;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class GeneratorUtil_ui_admin extends AbsGenerator {
         generate(classes,
                 StringFormater.format("{workspace}/{platformName}/framework/framework-generator/src/main/resources/templates/demoAdminVue.vue", generatorConfig),
                 (clazz) ->
-                        StringFormater.format("{workspace}/{platformName}/ui-admin/src/views/" + getModule(clazz, "sys") + "/" + StrUtil.lowerFirst(clazz.getSimpleName()) + ".vue", generatorConfig)
+                        StringFormater.format("{workspace}/{platformName}/ui-admin/src/views/" + getModule(clazz, "sys") + File.separator + StrUtil.lowerFirst(clazz.getSimpleName()) + ".vue", generatorConfig)
         );
     }
 }
