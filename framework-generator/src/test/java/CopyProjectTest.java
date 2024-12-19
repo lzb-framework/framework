@@ -73,8 +73,8 @@ public class CopyProjectTest {
     }
 //    public static void main(String[] args) {
 //            String basePath = "/path/to/your/directory";
-//            String oldString = "ai";
-//            String newString = "gym";
+//            String oldString = "platform";
+//            String newString = "snowball";
 //
 //            File baseDir = new File(basePath);
 //            if (baseDir.exists() && baseDir.isDirectory()) {

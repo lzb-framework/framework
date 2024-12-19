@@ -18,18 +18,18 @@
 //        );
 //        DEMO_NAME = "CommonDemo";
 //        //dao
-//        generateInSamePath(classes, "/Users/fa/parent_projects/ai/parent/common/common-common/src/main/java/com/pro/common/dao/CommonDemoDao.java");
+//        generateInSamePath(classes, "/Users/zubin/IdeaProjects/snowball/parent/common/common-common/src/main/java/com/pro/common/dao/CommonDemoDao.java");
 //
 //        //service
-//        generateInSamePath(classes, "/Users/fa/parent_projects/ai/parent/common/common-common/src/main/java/com/pro/common/service/CommonDemoService.java");
+//        generateInSamePath(classes, "/Users/zubin/IdeaProjects/snowball/parent/common/common-common/src/main/java/com/pro/common/service/CommonDemoService.java");
 //
 //        //admin controller
-////        generateInSamePath(classes, "/Users/fa/parent_projects/ai/platform/gym-admin/src/main/java/com/pro/ai/admin/controller/AdminDemoController.java");
+////        generateInSamePath(classes, "/Users/zubin/IdeaProjects/snowball/platform/platform-admin/src/main/java/com/pro/snowball/admin/controller/AdminDemoController.java");
 //
 ////        //user controller
-////        generateInSamePath(classes, "/Users/fa/parent_projects/ai/platform/gym-user/src/main/java/com/pro/ai/user/controller/UserDemoController.java");
+////        generateInSamePath(classes, "/Users/zubin/IdeaProjects/snowball/platform/platform-user/src/main/java/com/pro/snowball/user/controller/UserDemoController.java");
 //
 ////        //user common controller
-////        generateInSamePath(classes, "/Users/fa/parent_projects/ai/platform/gym-user/src/main/java/com/pro/ai/user/controller/DemoController.java");
+////        generateInSamePath(classes, "/Users/zubin/IdeaProjects/snowball/platform/platform-user/src/main/java/com/pro/snowball/user/controller/DemoController.java");
 //    }
 //}

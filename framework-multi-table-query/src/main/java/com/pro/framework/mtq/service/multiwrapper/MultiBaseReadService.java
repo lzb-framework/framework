@@ -8,6 +8,7 @@ import com.pro.framework.api.database.TimeQuery;
 import com.pro.framework.api.database.page.IPageInput;
 import com.pro.framework.api.database.wheredata.WhereDataUnit;
 import com.pro.framework.api.entity.IEntityProperties;
+import com.pro.framework.api.util.DateUtils;
 import com.pro.framework.api.util.StrUtils;
 import com.pro.framework.mtq.service.multiwrapper.entity.IMultiPageResult;
 import com.pro.framework.mtq.service.multiwrapper.entity.IMultiReadService;
@@ -49,9 +50,9 @@ public abstract class MultiBaseReadService<T> implements IMultiReadService<T> {
 
         MultiWrapperMainInner<T, ?> wrapperMain = wrapper.getWrapperInner().getWrapperMain();
         if (timeQuery != null) {
-            wrapperMain.ge(!MultiUtil.isEmpty(timeQuery.getStart()), timeQuery.getTimeColumn(), timeQuery.getStart());
+            wrapperMain.ge(!MultiUtil.isEmpty(timeQuery.getStart()), timeQuery.getTimeColumn(), DateUtils.parseDateTime(timeQuery.getStart(), true));
             if (!MultiUtil.isEmpty(timeQuery.getEnd())) {
-                wrapperMain.le(!MultiUtil.isEmpty(timeQuery.getEnd()), timeQuery.getTimeColumn(), LocalDateTime.of(LocalDate.parse(timeQuery.getEnd()), LocalTime.MAX));
+                wrapperMain.le(!MultiUtil.isEmpty(timeQuery.getEnd()), timeQuery.getTimeColumn(), DateUtils.parseDateTime(timeQuery.getEnd(), false));
             }
         }
         wrapperMain.setSelectFields(getSelectFields(wrapperMain.getClazz()));
@@ -82,8 +83,8 @@ public abstract class MultiBaseReadService<T> implements IMultiReadService<T> {
         wrapperMain.countDistinct();
         wrapperMain.sumAll();
         wrapperMain
-                .ge(!MultiUtil.isEmpty(timeQuery.getStart()), timeQuery.getTimeColumn(), timeQuery.getStart())
-                .le(!MultiUtil.isEmpty(timeQuery.getEnd()), timeQuery.getTimeColumn(), timeQuery.getEnd());
+                .ge(!MultiUtil.isEmpty(timeQuery.getStart()), timeQuery.getTimeColumn(), DateUtils.parseDateTime(timeQuery.getStart(), true))
+                .le(!MultiUtil.isEmpty(timeQuery.getEnd()), timeQuery.getTimeColumn(), DateUtils.parseDateTime(timeQuery.getEnd(), false));
         return MultiExecutor.aggregateList(wrapper);
     }
 
@@ -106,10 +107,10 @@ public abstract class MultiBaseReadService<T> implements IMultiReadService<T> {
         entityClassName = entityNameFilter(entityClassName);
         List<String> entityClassNameList = Arrays.stream(entityClassName.split(",")).collect(Collectors.toList());
         if (!MultiUtil.isEmpty(timeQuery.getStart())) {
-            paramMap.put(timeQuery.getTimeColumn(), "#ge#" + timeQuery.getStart());
+            paramMap.put(timeQuery.getTimeColumn(), "#ge#" + DateUtils.parseDateTime(timeQuery.getStart(), true));
         }
         if (!MultiUtil.isEmpty(timeQuery.getEnd())) {
-            paramMap.put(timeQuery.getTimeColumn(), "#le#" + LocalDateTime.of(LocalDate.parse(timeQuery.getEnd()), LocalTime.MAX));
+            paramMap.put(timeQuery.getTimeColumn(), "#le#" + DateUtils.parseDateTime(timeQuery.getEnd(), false));
         }
         MultiWrapper<T> wrapper = new MultiWrapper<>(entityClassNameList);
         MultiWrapperMainInner<T, ?> wrapperMain = wrapper.getWrapperInner().getWrapperMain();

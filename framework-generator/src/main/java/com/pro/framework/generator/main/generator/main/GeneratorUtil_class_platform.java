@@ -32,6 +32,6 @@ public class GeneratorUtil_class_platform extends AbsGenerator {
 //        generateInSamePath(classes, StringFormater.format("{workspace}/{platformName}/platform/{platformName}-admin/src/main/java/com/pro/{platformName}/admin/controller/AdminDemoController.java", generatorConfig));
 
 //        //复制生成 user controller
-//        generateInSamePath(classes, "/Users/fa/parent_projects/ai/platform/gym-user/src/main/java/com/pro/ai/user/controller/UserDemoController.java");
+//        generateInSamePath(classes, "/Users/zubin/IdeaProjects/{platformName}/platform/{platformName}-user/src/main/java/com/pro/{platformName}/user/controller/UserDemoController.java");
     }
 }

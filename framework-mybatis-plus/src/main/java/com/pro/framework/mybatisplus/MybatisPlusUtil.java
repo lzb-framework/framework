@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.pro.framework.api.database.TimeQuery;
 import com.pro.framework.api.util.ClassUtils;
+import com.pro.framework.api.util.DateUtils;
 import com.pro.framework.api.util.StrUtils;
 import com.pro.framework.mybatisplus.wrapper.MyQueryWrapper;
 import lombok.SneakyThrows;
@@ -72,8 +73,8 @@ public class MybatisPlusUtil {
         }
         if (timeQuery != null) {
             String timeColumn = StrUtils.camelToUnderline(timeQuery.getTimeColumn());
-            wrapper.ge(StrUtils.isNotBlank(timeQuery.getStart()), timeColumn, timeQuery.getStart());
-            wrapper.le(StrUtils.isNotBlank(timeQuery.getEnd()), timeColumn, timeQuery.getEnd());
+            wrapper.ge(StrUtils.isNotBlank(timeQuery.getStart()), timeColumn, DateUtils.parseDateTime(timeQuery.getStart(), true));
+            wrapper.le(StrUtils.isNotBlank(timeQuery.getEnd()), timeColumn, DateUtils.parseDateTime(timeQuery.getEnd(), false));
         }
         return wrapper;
     }
