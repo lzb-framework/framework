@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.pro.framework.javatodb.model.JTDFieldInfoDb.LABEL_DESC_ENUM_SYS;
 import static com.pro.framework.javatodb.model.JTDFieldInfoDb.LABEL_DESC_SPLIT;
 
 @Slf4j
@@ -147,7 +148,8 @@ public class JTDFieldInfoDbUtil {
                 .setCharset(JTDUtil.or(java.getCharset(), build.getCharset()))
                 .setAutoIncrement(idFields.contains(fieldName) && AUTO_INCREASE_TYPE.contains(javaType) ? java.getAutoIncrement() : false)
                 .setDefaultValue(JTDUtil.or(appendDefault(java.getDefaultValue()), appendDefault(build.getDefaultValue()), buildDefaultValueByFieldName(fieldName, fieldPatternNotNullDefaultValueMap)).trim())
-                .setDescription(appendDescription(java.getDescription(), java.getJavaType()));
+                .setDescription(java.getDescription())
+                .setDescriptionDb(appendDescription(java.getDescription(), java.getJavaType()));
         ;
         switch (type) {
             case longtext:
@@ -349,13 +351,18 @@ public class JTDFieldInfoDbUtil {
         }
         String label = null;
         String description = "";
+        String descriptionDb = "";
         if (fieldConfigSql.contains("COMMENT '")) {
             String commentLast = fieldConfigSql.split("COMMENT '")[1];
             label = commentLast.substring(0, commentLast.lastIndexOf("'"));
             label = label.replaceAll("''", "'");
             int index = label.indexOf(LABEL_DESC_SPLIT);
             if (index >= 0) {
-                description = label.substring(index + 1);
+                descriptionDb = label.substring(index + 1);
+                description = descriptionDb;
+                if (description.startsWith(LABEL_DESC_ENUM_SYS)) {
+                    description = "";
+                }
                 label = label.substring(0, index);
             }
         }
@@ -378,6 +385,7 @@ public class JTDFieldInfoDbUtil {
         fieldInfo.setFieldName(JTDUtil.toUnderlineCase(fieldName));
         fieldInfo.setLabel(label);
         fieldInfo.setDescription(description);
+        fieldInfo.setDescriptionDb(descriptionDb);
         fieldInfo.setType(type);
         fieldInfo.setMainLength(mainLength);
         fieldInfo.setDecimalLength(decimalLength);
@@ -398,7 +406,8 @@ public class JTDFieldInfoDbUtil {
         }
         StringBuilder valueLabel = new StringBuilder();
         if (javaType.isEnum()) {
-            valueLabel = new StringBuilder(javaType.getSimpleName() + " ");
+            valueLabel = new StringBuilder(LABEL_DESC_ENUM_SYS);
+            valueLabel.append(javaType.getSimpleName()).append(" ");
             Map<Serializable, String> map = EnumUtil.getNameLabelMap(javaType);
             for (Serializable key : map.keySet()) {
                 String value = map.get(key);

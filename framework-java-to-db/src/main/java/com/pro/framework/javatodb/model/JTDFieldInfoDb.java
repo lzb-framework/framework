@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
 
     public static final String LABEL_DESC_SPLIT = ";";
+    public static final String LABEL_DESC_ENUM_SYS = "#Enum#";
     /**
      * 字段名
      */
@@ -133,6 +134,10 @@ public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
      */
     private String description;
     /**
+     * 描述
+     */
+    private String descriptionDb;
+    /**
      * 对应哪个实体类(的主键)
      */
     transient private String entityName;
@@ -162,7 +167,7 @@ public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
                 toSql_default(JTDConst.EnumFieldNullType.not_null.equals(notNull), defaultValue, tableName, fieldName),
                 (autoIncrement ? "AUTO_INCREMENT" : ""),
                 (null != charset ? "CHARACTER SET " + charset : ""),
-                JTDUtil.format("COMMENT ''{0}''", ClientPreparedQueryBindings.escapeSqlSpecialChar(JTDUtil.or(label,"") + LABEL_DESC_SPLIT + JTDUtil.or(description,"")))
+                JTDUtil.format("COMMENT ''{0}''", ClientPreparedQueryBindings.escapeSqlSpecialChar(JTDUtil.or(label,"") + LABEL_DESC_SPLIT + JTDUtil.or(descriptionDb,"")))
         ).filter(JTDUtil::isNotBlank).collect(Collectors.joining(" "));
     }
 

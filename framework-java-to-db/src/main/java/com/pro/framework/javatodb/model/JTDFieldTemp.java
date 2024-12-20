@@ -22,8 +22,9 @@ public class JTDFieldTemp implements JTDField {
 
     String label;
 
-    //label description构成字段备注
     String description;
+    //label description构成字段备注
+    String descriptionDb;
 
     String fieldName;
 
@@ -134,6 +135,11 @@ public class JTDFieldTemp implements JTDField {
     @Override
     public String description() {
         return description;
+    }
+
+    @Override
+    public String descriptionDb() {
+        return descriptionDb;
     }
 
     @Override

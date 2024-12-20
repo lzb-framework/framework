@@ -24,6 +24,8 @@ import java.sql.ResultSet;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.pro.framework.javatodb.util.JTDFieldInfoDbUtil.appendDescription;
+
 /**
  * {@link JTDConfig}
  * 从早到晚
@@ -328,6 +330,7 @@ public class JTDServiceImpl implements IJTDService {
                     fieldInfo.setSort(defaultNull(annotationField.sort()));
                     fieldInfo.setDisabled(defaultNull(annotationField.disabled()));
                     fieldInfo.setDescription(defaultNull(annotationField.getDescription()));
+                    fieldInfo.setDescriptionDb(appendDescription(fieldInfo.getDescription(), fieldInfo.getJavaType()));
                     return JTDFieldInfoDbUtil.init(
                             jtdTable,
                             fieldInfo,

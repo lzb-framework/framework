@@ -26,8 +26,10 @@ public @interface JTDField {
 //    @AliasFor("value")
     String label() default "";
 
-    //label + 枚举可选值 + description构成字段备注
+    //代码和页面备注
     String description() default "";
+    //数据库字段备注
+    String descriptionDb() default "";
 
     /**
      * 字段名 例如 nick_name
