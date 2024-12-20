@@ -332,7 +332,7 @@ public class JTDFieldInfoDbUtil {
             ++currentIndex;
             ++currentIndex;
             if ("".equals(defaultValue)) {
-                defaultValue = "''";// 注解里 "''"对应空字符的情况  注解里 "" 对应没配置的情况
+                defaultValue = "''";// 注解里 "''"空字符的情况  注解里 "" 对应没配置的情况
             }
         }
         // else {
