@@ -1,6 +1,6 @@
-package com.pro.framework.mtq.service.multiwrapper.util;
+package com.pro.framework.mtq.service.multiwrapper.config.typehandler;
 
-import com.baomidou.mybatisplus.annotation.IEnum;
+import com.pro.framework.api.enums.IEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -10,7 +10,6 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * 重写mybatis枚举处理器
@@ -32,7 +31,7 @@ public class EnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
     public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
         String name = parameter.name();
         if (parameter instanceof IEnum) {
-            Serializable value = ((IEnum) parameter).getValue();
+            Serializable value = ((IEnum) parameter).getCode();
             name = String.valueOf(value);
         }
         if (jdbcType == null) {

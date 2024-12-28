@@ -45,6 +45,7 @@ public class JTDFieldInfoDbUtil {
                 build.setType(JTDConst.EnumFieldType.bigint)
 //                        .setMainLength(20)
                         .setNotNull(isKeyProp ? JTDConst.EnumFieldNullType.not_null : JTDConst.EnumFieldNullType.can_null)
+                        .setNotEmpty(JTDConst.EnumFieldEmptyType.not_empty)
                 ;
                 break;
             case "java.lang.Integer":
@@ -144,6 +145,7 @@ public class JTDFieldInfoDbUtil {
                 .setMainLength(orInt(java.getMainLength(), build.getMainLength()))
                 .setDecimalLength(orInt(java.getDecimalLength(), build.getDecimalLength()))
                 .setNotNull(JTDUtil.or(java.getNotNull(), build.getNotNull(), JTDConst.EnumFieldNullType.not_null))
+                .setNotEmpty(JTDUtil.or(java.getNotEmpty(), JTDConst.EnumFieldEmptyType.can_empty))
                 .setRenameFrom(JTDUtil.or(java.getRenameFrom(), build.getRenameFrom()))
                 .setCharset(JTDUtil.or(java.getCharset(), build.getCharset()))
                 .setAutoIncrement(idFields.contains(fieldName) && AUTO_INCREASE_TYPE.contains(javaType) ? java.getAutoIncrement() : false)

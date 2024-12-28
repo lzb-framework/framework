@@ -66,6 +66,11 @@ public class JTDFieldInfoDb implements ISqlSegmentInfo, Serializable {
     private JTDConst.EnumFieldNullType notNull;
 
     /**
+     * 是否不为空字符串
+     */
+    private JTDConst.EnumFieldEmptyType notEmpty;
+
+    /**
      * 默认值
      */
     private String defaultValue;

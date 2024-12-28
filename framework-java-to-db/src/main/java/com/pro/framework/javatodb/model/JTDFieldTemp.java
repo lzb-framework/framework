@@ -54,6 +54,11 @@ public class JTDFieldTemp implements JTDField {
     JTDConst.EnumFieldNullType notNull;
 
     /**
+     * 是否不为空
+     */
+    JTDConst.EnumFieldEmptyType notEmpty;
+
+    /**
      * 默认值
      */
     String defaultValue;
@@ -170,6 +175,11 @@ public class JTDFieldTemp implements JTDField {
     @Override
     public JTDConst.EnumFieldNullType notNull() {
         return notNull;
+    }
+
+    @Override
+    public JTDConst.EnumFieldEmptyType notEmpty() {
+        return notEmpty;
     }
 
     @Override

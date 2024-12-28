@@ -61,6 +61,11 @@ public @interface JTDField {
     JTDConst.EnumFieldNullType notNull() default JTDConst.EnumFieldNullType.none;
 
     /**
+     * 是否不为空字符串
+     */
+    JTDConst.EnumFieldEmptyType notEmpty() default JTDConst.EnumFieldEmptyType.none;
+
+    /**
      * 默认值
      * 默认没设置default
      * "NULL"表示设置为空

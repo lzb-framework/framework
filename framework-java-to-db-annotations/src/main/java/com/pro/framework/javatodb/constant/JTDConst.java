@@ -86,11 +86,11 @@ public class JTDConst implements IConst {
         json("json对象"),
         xml("xml文本"),
         ;
-        private String label;
+        private final String label;
     }
 
     /**
-     * 页面端类型
+     * 数据库端类型
      */
     @AllArgsConstructor
     @Getter
@@ -99,7 +99,19 @@ public class JTDConst implements IConst {
         can_null("可以为空"),
         not_null("不能为空"),
         ;
-        private String label;
+        private final String label;
+    }
+    /**
+     * 页面端类型
+     */
+    @AllArgsConstructor
+    @Getter
+    public enum EnumFieldEmptyType {
+        none(null),
+        can_empty("可以为空字符串"),
+        not_empty("不能为空字符串"),
+        ;
+        private final String label;
     }
 
     /**

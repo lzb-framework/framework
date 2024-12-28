@@ -118,9 +118,9 @@ public class EnumsServiceImpl implements IEnumsService {
         if (!updates.isEmpty()) {
             log.info("枚举入库 {} 修改:{} {}", enumClass, updates.size(), updates.stream().map(ENTITY::getEnumToDbCode).collect(Collectors.joining(",")));
         }
-        enumDatas.stream().filter(e->e.getEnumToDbCode().contains("count")).findAny().ifPresent(enumData -> {
-            log.info("枚举入库 count {}", enumClass);
-        });
+//        enumDatas.stream().filter(e->e.getEnumToDbCode().contains("count")).findAny().ifPresent(enumData -> {
+//            log.info("枚举入库 count {}", enumClass);
+//        });
         int i = 0;
     }
 

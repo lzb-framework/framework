@@ -108,6 +108,7 @@ public class JTDServiceImpl implements IJTDService {
             f.setSortable(null);
             f.setSort(null);
             f.setDisabled(null);
+            f.setNotEmpty(null);
         });
 
         //2.从数据库中,查询旧表 (与新表有关系的旧表)
@@ -315,6 +316,7 @@ public class JTDServiceImpl implements IJTDService {
                     fieldInfo.setMainLength(defaultNull(annotationField.mainLength()));
                     fieldInfo.setDecimalLength(defaultNull(annotationField.decimalLength()));
                     fieldInfo.setNotNull(defaultNull(annotationField.notNull()));
+                    fieldInfo.setNotEmpty(defaultNull(annotationField.notEmpty()));
                     fieldInfo.setDefaultValue(defaultNull(annotationField.defaultValue()));
                     fieldInfo.setCharset(defaultNull(annotationField.getCharset()));
                     fieldInfo.setAutoIncrement(defaultNull(annotationField.autoIncrement()));
@@ -409,6 +411,7 @@ public class JTDServiceImpl implements IJTDService {
         to.setJavaTypeEnumClass(from.javaTypeEnumClass());
         to.setJavaTypeEnumClassMultiple(from.javaTypeEnumClassMultiple());
         to.setNotNull(from.notNull());
+        to.setNotEmpty(from.notEmpty());
         to.setMainLength(from.mainLength());
         if (JTDUtil.isNotBlank(from.renameFrom())) {
             to.setRenameFrom(from.renameFrom());
@@ -501,6 +504,7 @@ public class JTDServiceImpl implements IJTDService {
         to.setJavaTypeEnumClass(from.javaTypeEnumClass());
         to.setJavaTypeEnumClassMultiple(from.javaTypeEnumClassMultiple());
         to.setNotNull(from.notNull());
+        to.setNotEmpty(from.notEmpty());
         to.setMainLength(from.mainLength());
         to.setRenameFrom(from.renameFrom());
         to.setType(from.type());
