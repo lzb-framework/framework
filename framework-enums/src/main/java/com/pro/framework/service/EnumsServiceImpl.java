@@ -87,7 +87,7 @@ public class EnumsServiceImpl implements IEnumsService {
         Map<String, ENTITY> oldMap = CollUtils.listToMap(oldEntitys, ENTITY::getEnumToDbCode);
         Set<String> oldCodes = oldMap.keySet();
 
-//        boolean banner = entityClass.getSimpleName().equals("Banner");
+//        boolean banner = entityClass.getSimpleName().equals("AuthDict");
 //        if (banner) {
 //            int i = 0;
 //        }
