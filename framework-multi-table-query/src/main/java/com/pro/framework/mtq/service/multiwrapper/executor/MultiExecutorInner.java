@@ -63,7 +63,7 @@ public class MultiExecutorInner {
         }).stream().filter(Objects::nonNull).collect(Collectors.toList());
 
 
-        log.info("Multi 查询Sql:\n {} \n 查询结果:{}条", sql, mains.size());
+//        log.info("Multi 查询Sql:\n {} \n 查询结果:{}条", sql, mains.size());
 
         if (null != BaseMultiConfig.multiProperties && BaseMultiConfig.multiProperties.getCheckRelationRequire()) {
             //检查表关系中,一方有数据,另一方必须有数据,是否有异常数据(测试环境可以开启)
@@ -155,7 +155,7 @@ public class MultiExecutorInner {
 
         AggregateResult aggregateResult = getResult(objectMap);
 
-        log.info("Multi 查询Sql:\n {} \n 查询结果:{}", aggregateSql, aggregateResult);
+//        log.info("Multi 查询Sql:\n {} \n 查询结果:{}", aggregateSql, aggregateResult);
 
         return aggregateResult;
     }
@@ -217,7 +217,7 @@ public class MultiExecutorInner {
 
         List<Map<String, Object>> list = BaseMultiConfig.multiDbAdaptor.select(aggregateSql, DbAdaptor::rsToMap);
         List<AggregateResult> aggregateResult = list.stream().map(MultiExecutorInner::getResult).collect(Collectors.toList());
-        log.info("Multi 查询Sql:\n {} \n 查询结果:{}", aggregateSql, aggregateResult);
+//        log.info("Multi 查询Sql:\n {} \n 查询结果:{}", aggregateSql, aggregateResult);
         return aggregateResult;
     }
 

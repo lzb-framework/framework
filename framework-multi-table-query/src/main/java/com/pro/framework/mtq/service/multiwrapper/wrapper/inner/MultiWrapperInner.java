@@ -433,7 +433,7 @@ public class MultiWrapperInner<MAIN> {
             return wrapperInner.getSqlWhereProps(curr.getTableClassThis(), relationCode, this.extendParamMap.get(relationCode));
         }).collect(Collectors.toList());
 
-        log.debug("getSqlWhere {}", JSONUtils.toString(sqlWheres));
+//        log.debug("getSqlWhere {}", JSONUtils.toString(sqlWheres));
         String sqlWhereAppend = sqlWheres.stream().filter(s -> !MultiUtil.isEmpty(s)).collect(Collectors.joining("\n and "));
         return MultiUtil.isEmpty(sqlWhereAppend) ? MultiConstant.Strings.EMPTY : "where 1=1\n and " + sqlWhereAppend;
     }
