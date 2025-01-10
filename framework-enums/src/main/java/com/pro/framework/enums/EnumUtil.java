@@ -36,7 +36,7 @@ public class EnumUtil {
      * @return 例如 [{name:'INIT',LABEL:'初始化',color:'blue'},{name:'SUCCESS',LABEL:'成功',color:'green'}]
      */
     public static <T extends Enum<T>> List<Map<String, ?>> getFullList(Class<T> eClass) {
-        return enumList(eClass).stream().map(EnumUtil::toMap).collect(Collectors.toList());
+        return enumList(eClass).stream().map(EnumUtil::toMapCodeLabel).collect(Collectors.toList());
     }
 
     /**
@@ -46,7 +46,15 @@ public class EnumUtil {
      * @return Map(propName, values)    例如,{name:'INIT',label:'初始化',color:'blue'}
      */
     @SneakyThrows
-    public static <T extends Enum<T>> Map<String, Object> toMap(T t) {
+    public static <T extends Enum<T>> Map<String, Object> toMapCodeLabel(T t) {
+        Map<String, Object> map = toMap(t);
+        map.computeIfAbsent("code", k -> t.name());
+        map.computeIfAbsent("label", k -> (t instanceof IEnum) ? ((IEnum) t).getLabel() : t.name());
+        return map;
+    }
+
+    @SneakyThrows
+    public static <T extends Enum> Map<String, Object> toMap(T t) {
         Map<String, Object> map = new HashMap<>(16);
         Class<?> aClass = t.getClass();
         for (Field field : aClass.getDeclaredFields()) {
@@ -57,8 +65,6 @@ public class EnumUtil {
                 map.put(field.getName(), field.get(t));
             }
         }
-        map.computeIfAbsent("code", k -> t.name());
-        map.computeIfAbsent("label", k -> (t instanceof IEnum) ? ((IEnum) t).getLabel() : t.name());
         return map;
     }
 
@@ -69,14 +75,14 @@ public class EnumUtil {
      * label>  例如 {INIT:'初始化',SUCCESS:'成功'}
      */
     @SneakyThrows
-    public static <T extends Enum<T>> Map<Serializable, String> getNameLabelMap(Class<T> eClass) {
+    public static <T extends Enum> Map<Serializable, String> getNameLabelMap(Class<T> eClass) {
         Map<Serializable, String> map = new LinkedHashMap<>(16);
         try {
-            for (T t : enumList2(eClass)) {
+            for (T t : enumList(eClass)) {
                 map.put(getDbValue(t), getLabel(t));
             }
         } catch (NoSuchFieldException e) {
-            for (T t : enumList2(eClass)) {
+            for (T t : enumList(eClass)) {
                 map.put(getDbValue(t), null);
             }
         }
@@ -100,22 +106,22 @@ public class EnumUtil {
     }
 
 
-    @SneakyThrows
-    public static <T extends Enum<T>> List<T> enumList(Class<T> clazz) {
-        try {
-            return new ArrayList<>(EnumSet.allOf(clazz));
-        } catch (ClassCastException e) {
-            log.error("Enum.enumList()异常|" + e.getMessage() + "|className=" + clazz);
-            return new ArrayList<>(0);
-        }
-    }
+//    @SneakyThrows
+//    public static <T extends Enum<T>> List<T> enumList(Class<T> clazz) {
+//        try {
+//            return new ArrayList<>(EnumSet.allOf(clazz));
+//        } catch (ClassCastException e) {
+//            log.error("Enum.enumList()异常|" + e.getMessage() + "|className=" + clazz);
+//            return new ArrayList<>(0);
+//        }
+//    }
 
     @SneakyThrows
-    public static <T extends Enum<T>> List<T> enumList2(Class<T> clazz) {
+    public static <T extends Enum> List<T> enumList(Class<T> clazz) {
         if (null == clazz || !clazz.isEnum()) {
             throw new Exception("无法获取枚举字典,无效的枚举类=" + clazz);
         }
-        return enumList(clazz);
+        return new ArrayList<>(EnumSet.allOf(clazz));
     }
 
     public static String lowerFirst(String str) {

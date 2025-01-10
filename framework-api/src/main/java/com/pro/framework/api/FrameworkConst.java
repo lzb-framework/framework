@@ -21,6 +21,8 @@ public class FrameworkConst {
 
         public static final String FALSE = "false";
         public static final String TRUE = "true";
+        public static final String FALSE_TRANSLATE_KEY = "否";
+        public static final String TRUE_TRANSLATE_KEY = "是";
 
         public static final String split_pound = "##";
         public static final String limit_1 = "limit 1";

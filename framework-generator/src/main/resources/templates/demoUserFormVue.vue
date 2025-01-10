@@ -80,7 +80,7 @@ export default {
       this.$post('/user/demo/submit', this.demoUserForm).then(res => {
         this.getToken()
         this.$toast
-            .success(this.$t('Commit_Success'))
+            .success(this.$t('提交成功'))
       }).finally(e => {
         this.demoLoading = true
         this.$emit('afterSubmit')

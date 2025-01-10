@@ -22,6 +22,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 枚举入库服务
@@ -39,11 +40,41 @@ public class EnumsServiceImpl implements IEnumsService {
      * 枚举入库
      */
     @Override
+    public List<String> getTranslateKeys(boolean isCommon, String platform) {
+        String packagePlatform = "com.pro." + platform;
+        EnumConstant.load(enumProperties);
+        Class<IEnumToDbEnum> intf = IEnumToDbEnum.class;
+        List<Class> enumClasses = EnumConstant.simpleNameClassMapNoReplace.values().stream()
+                .filter(intf::isAssignableFrom)
+                .filter(c -> isCommon != c.getPackage().getName().startsWith(packagePlatform))
+                .sorted(Comparator.comparing(
+                        c -> null == c.getAnnotation(EnumOrder.class) ? 100 : c.getAnnotation(EnumOrder.class).value()))
+                .collect(Collectors.toList());
+        return enumClasses.stream().flatMap(c -> {
+            List<Enum> enums = EnumUtil.enumList(c);
+            return enums.stream().flatMap(e -> {
+                Map<String, Object> map = EnumUtil.toMap(e);
+                String code = (String) map.get("code");
+                String remark = (String) map.get("remark");
+                String description = (String) map.get("description");
+                String name = (String) map.get("name");
+                return Stream.of(code, name, remark, description);
+            });
+        }).distinct().toList();
+    }
+
+    /**
+     * 枚举入库
+     */
+    @Override
     public void executeSql() {
         EnumConstant.load(enumProperties);
         Class<IEnumToDbEnum> intf = IEnumToDbEnum.class;
-        List<Class> enumClasses = EnumConstant.simpleNameClassMapNoReplace.values().stream().filter(intf::isAssignableFrom)
-                .sorted(Comparator.comparing(c -> null == c.getAnnotation(EnumOrder.class) ? 100 : c.getAnnotation(EnumOrder.class).value()))
+        List<Class> enumClasses = EnumConstant.simpleNameClassMapNoReplace.values()
+                .stream()
+                .filter(intf::isAssignableFrom)
+                .sorted(Comparator.comparing(
+                        c -> null == c.getAnnotation(EnumOrder.class) ? 100 : c.getAnnotation(EnumOrder.class).value()))
                 .collect(Collectors.toList());
         enumClasses.forEach(enumClass -> {
             // 读取枚举实例,入库
@@ -51,15 +82,18 @@ public class EnumsServiceImpl implements IEnumsService {
                 // 获取一个子类在实现接口使用的,泛型类
                 Class entityClass = getGeneClass(enumClass, intf);
                 // 定制类
-                entityClass = entityProperties.getEntityClassReplaceMap().getOrDefault(entityClass.getSimpleName(), entityClass);
-                AssertUtil.isTrue(IEnumToDbDb.class.isAssignableFrom(entityClass), "{} must implements IEnumToDbDb", entityClass.getSimpleName());
+                entityClass = entityProperties.getEntityClassReplaceMap()
+                        .getOrDefault(entityClass.getSimpleName(), entityClass);
+                AssertUtil.isTrue(IEnumToDbDb.class.isAssignableFrom(entityClass), "{} must implements IEnumToDbDb",
+                        entityClass.getSimpleName());
 
                 readEnumInstancesSaveOrUpdate(dbBaseService, enumClass, entityClass);
             } catch (Exception e) {
                 log.error("枚举入库完成 存在异常 {}", enumClass, e);
             }
         });
-        log.warn("枚举入库完成 扫描了: {}", enumClasses.stream().map(Class::getSimpleName).collect(Collectors.joining(",")));
+        log.warn("枚举入库完成 扫描了: {}",
+                enumClasses.stream().map(Class::getSimpleName).collect(Collectors.joining(",")));
     }
 
     @Override
@@ -92,7 +126,11 @@ public class EnumsServiceImpl implements IEnumsService {
 //            int i = 0;
 //        }
         // 新增
-        List<ENTITY> creates = enumDatas.stream().filter(enumData -> !oldCodes.contains(enumData.getEnumToDbCode())).peek(enumData -> enumData.getEntity().setEnumToDbCode(enumData.getEnumToDbCode())).map(EnumData::getEntity).collect(Collectors.toList());
+        List<ENTITY> creates = enumDatas.stream()
+                .filter(enumData -> !oldCodes.contains(enumData.getEnumToDbCode()))
+                .peek(enumData -> enumData.getEntity().setEnumToDbCode(enumData.getEnumToDbCode()))
+                .map(EnumData::getEntity)
+                .collect(Collectors.toList());
         if (!creates.isEmpty()) {
             log.warn("自动保存数据| {} {}", enumClass.getSimpleName(), JSONUtil.toJsonStr(creates));
         }
@@ -103,7 +141,8 @@ public class EnumsServiceImpl implements IEnumsService {
             ENTITY oldEntity = oldMap.get(code);
             LocalDateTime forceTime = LogicUtils.and(enumData.getForceChangeTime(), DateUtil::parseLocalDateTime);
             LocalDateTime oldUpdateTime = null == oldEntity ? null : oldEntity.getUpdateTime();
-            boolean doUpdate = oldCodes.contains(code) && null != forceTime && null != oldUpdateTime && !forceTime.isBefore(oldUpdateTime);
+            boolean doUpdate = oldCodes.contains(
+                    code) && null != forceTime && null != oldUpdateTime && !forceTime.isBefore(oldUpdateTime);
             if (doUpdate) {
                 // 回填id
                 enumData.getEntity().setEnumToDbCode(oldEntity.getEnumToDbCode());
@@ -113,10 +152,12 @@ public class EnumsServiceImpl implements IEnumsService {
         }).map(EnumData::getEntity).collect(Collectors.toList());
         dbBaseService.updateBatchById(updates);
         if (!creates.isEmpty()) {
-            log.info("枚举入库 {} 新增:{} {}", enumClass, creates.size(), creates.stream().map(ENTITY::getEnumToDbCode).collect(Collectors.joining(",")));
+            log.info("枚举入库 {} 新增:{} {}", enumClass, creates.size(),
+                    creates.stream().map(ENTITY::getEnumToDbCode).collect(Collectors.joining(",")));
         }
         if (!updates.isEmpty()) {
-            log.info("枚举入库 {} 修改:{} {}", enumClass, updates.size(), updates.stream().map(ENTITY::getEnumToDbCode).collect(Collectors.joining(",")));
+            log.info("枚举入库 {} 修改:{} {}", enumClass, updates.size(),
+                    updates.stream().map(ENTITY::getEnumToDbCode).collect(Collectors.joining(",")));
         }
 //        enumDatas.stream().filter(e->e.getEnumToDbCode().contains("count")).findAny().ifPresent(enumData -> {
 //            log.info("枚举入库 count {}", enumClass);
@@ -128,7 +169,9 @@ public class EnumsServiceImpl implements IEnumsService {
      * 读取枚举中的所有枚举实例
      */
     public static <ENUM extends Enum<?> & IEnumToDbEnum<ENTITY>, ENTITY extends IEnumToDbDb> List<EnumData<ENTITY>> readEnumInstances(Class<ENUM> enumClass, Class<ENTITY> entityClass) {
-        return Arrays.stream(enumClass.getEnumConstants()).map(e -> EnumsServiceImpl.readEnumInstance(e, entityClass)).collect(Collectors.toList());
+        return Arrays.stream(enumClass.getEnumConstants())
+                .map(e -> EnumsServiceImpl.readEnumInstance(e, entityClass))
+                .collect(Collectors.toList());
     }
 
     /**

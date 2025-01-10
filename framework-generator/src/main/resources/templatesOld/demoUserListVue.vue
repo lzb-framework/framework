@@ -4,12 +4,12 @@
 
     <van-tabs v-model="state" @click="reloadDemoList()" sticky>
       <van-tab :title="$t(`全部`)" key="all" name="all"></van-tab>
-      <template v-for="(label,code) in dictEnumMapAll['EnumLoanOrderState']">
-        <van-tab :title="$t(`EnumLoanOrderState_${code}`)" :key="code" :name="code"></van-tab>
+      <template v-for="(label,code) in dictEnumMapAll['EnumOrderState']">
+        <van-tab :title="$t(`EnumOrderState_${code}`)" :key="code" :name="code"></van-tab>
       </template>
     </van-tabs>
 
-    <van-empty v-if="!demos || demos.length === 0" :description="$t(`No_More_Data`)"/>
+    <van-empty v-if="!demos || demos.length === 0" :description="$t(`没有更多数据`)"/>
     <div class="container" v-else>
       <template v-for="(demoOne,index) in list">
         <demo :key="index" :demo="demoOne" @click="jump('/user/demoDetail?id='+demoOne.id)"></demo>

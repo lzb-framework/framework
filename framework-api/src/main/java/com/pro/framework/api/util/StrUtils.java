@@ -190,4 +190,21 @@ public class StrUtils {
         return m.find();
     }
 
+    /**
+     * 替换存在分隔的字符 ([opt+右][alt+右]没办法一次性跳过的,全选内容的字符)
+     */
+    public static String replaceSpecialStr(String str) {
+        if (str == null) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            if ('_' == c || Character.isLetterOrDigit(c) || Character.UnicodeBlock.of(
+                    c) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 }

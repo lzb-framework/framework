@@ -19,9 +19,9 @@ public class GeneratorUtil_ui_user extends AbsGenerator {
                 // Goods.class,
                 // GoodsCate.class,
                 // GoodsSpec.class,
-                // LoanProductStateInfo.class,
-                // LoanOrder.class,
-                // LoanRepayOrder.class,
+                // ProductStateInfo.class,
+                // Order.class,
+                // RepayOrder.class,
         );
 
         //1.用 demoUserFormVue.vue 生成 demoUserFormVue.vue.vm

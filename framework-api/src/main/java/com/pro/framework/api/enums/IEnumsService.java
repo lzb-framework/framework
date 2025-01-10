@@ -11,6 +11,8 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public interface IEnumsService extends IReloadService {
 
+    List<String> getTranslateKeys(boolean isCommon, String platform);
+
     void executeSql();
 
     Class<? extends Enum> getEnumClass(String simpleClassName);
