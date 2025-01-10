@@ -65,7 +65,7 @@ public class JTDTableMetaServiceFieldImpl implements JTDTableMetaService {
                 String defaultValue = newField.getDefaultValue();
                 // 修改 并且 not null
                 if (!isAdd && JTDConst.EnumFieldNullType.not_null.equals(newField.getNotNull()) && JTDUtil.isNotBlank(defaultValue)) {
-                    String updateNullSql = MessageFormat.format("UPDATE `{0}` set `{1}` = {2},update_time =now() where `{3}` is null; ", tableName, oldFieldName, defaultValue, oldFieldName);
+                    String updateNullSql = MessageFormat.format("UPDATE `{0}` set `{1}` = {2} where `{3}` is null; ", tableName, oldFieldName, defaultValue, oldFieldName);
                     content = updateNullSql + content;
                 }
                 return new JTDSqlInfo(runType, content);
