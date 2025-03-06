@@ -70,12 +70,16 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends IModel> ext
         return this.lambdaQuery().setEntity(t).orderByAsc(prop).last("limit 1").one();
     }
 
+    public T getOne(T t) {
+        return this.lambdaQuery().setEntity(t).last("limit 1").one();
+    }
+
     public List<T> list(T t) {
         return this.lambdaQuery().setEntity(t).list();
     }
 
     public Map<Long, T> idMap(Collection<? extends Serializable> ids) {
-        return this.listByIds(ids).stream().collect(Collectors.toMap(T::getId, o -> o));
+        return ids.isEmpty() ? Collections.emptyMap() : this.listByIds(ids).stream().collect(Collectors.toMap(T::getId, o -> o));
     }
 
 

@@ -1,7 +1,7 @@
 package com.pro.framework.javatodb.service;
 
 import com.pro.framework.api.entity.IEntityProperties;
-import com.pro.framework.enums.EnumUtil;
+import com.pro.framework.core.EnumUtil;
 import com.pro.framework.javatodb.annotation.JTDField;
 import com.pro.framework.javatodb.annotation.JTDFieldSql;
 import com.pro.framework.javatodb.annotation.JTDTable;

@@ -93,6 +93,10 @@ public class CollUtils extends CollUtil {
     }
 
     public static <T> BigDecimal sum(List<T> list, Function<T, BigDecimal> amountFun) {
-        return list.stream().map(amountFun).reduce(BigDecimal::add).orElse(BigDecimal.ONE);
+        return list.stream().map(amountFun).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+    }
+
+    public static <T> Integer sumInteger(List<T> list, Function<T, Integer> amountFun) {
+        return list.stream().map(amountFun).reduce(Math::addExact).orElse(0);
     }
 }

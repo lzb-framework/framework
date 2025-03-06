@@ -8,12 +8,12 @@ import java.util.List;
 public class AssertUtil {
 
     public static <T> List<T> notEmpty(List<T> o, String errorMsgTemplate) {
-        isTrue(null != o && 0 != o.size(), errorMsgTemplate);
+        isTrue(null != o && !o.isEmpty(), errorMsgTemplate);
         return o;
     }
 
     public static String notEmpty(String o, String errorMsgTemplate) {
-        isTrue(null != o && 0 != o.length(), errorMsgTemplate);
+        isTrue(null != o && !o.isEmpty(), errorMsgTemplate);
         return o;
     }
 
@@ -23,12 +23,12 @@ public class AssertUtil {
     }
 
     public static <T> List<T> notEmpty(List<T> o, String errorMsgTemplate, Object... param) {
-        isTrue(null != o && 0 != o.size(), errorMsgTemplate, param);
+        isTrue(null != o && !o.isEmpty(), errorMsgTemplate, param);
         return o;
     }
 
     public static String notEmpty(String o, String errorMsgTemplate, Object... param) {
-        isTrue(null != o && 0 != o.length(), errorMsgTemplate, param);
+        isTrue(null != o && !o.isEmpty(), errorMsgTemplate, param);
         return o;
     }
 

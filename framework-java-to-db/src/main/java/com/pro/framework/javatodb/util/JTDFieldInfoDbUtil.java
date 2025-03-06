@@ -1,6 +1,6 @@
 package com.pro.framework.javatodb.util;
 
-import com.pro.framework.enums.EnumUtil;
+import com.pro.framework.core.EnumUtil;
 import com.pro.framework.javatodb.constant.JTDConst;
 import com.pro.framework.javatodb.model.JTDFieldInfoDb;
 import com.pro.framework.javatodb.model.JTDFieldInfoJava;

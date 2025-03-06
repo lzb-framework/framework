@@ -1,15 +1,15 @@
 package com.pro.framework.api.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.pro.framework.api.FrameworkConst;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StrUtils {
     public static final String EMPTY = "";
@@ -59,6 +59,7 @@ public class StrUtils {
             return false;
         }
     }
+
     public static <T> boolean empty(T[] o) {
         return null == o || 0 == o.length;
     }
@@ -94,6 +95,7 @@ public class StrUtils {
         }
         return param.substring(0, 1).toLowerCase() + param.substring(1);
     }
+
     /**
      * 首字母转换小写
      *
@@ -190,21 +192,52 @@ public class StrUtils {
         return m.find();
     }
 
-    /**
-     * 替换存在分隔的字符 ([opt+右][alt+右]没办法一次性跳过的,全选内容的字符)
-     */
-    public static String replaceSpecialStr(String str) {
-        if (str == null) {
-            return "";
-        }
+//    /**
+//     * 替换存在分隔的字符 ([opt+右][alt+右]没办法一次性跳过的,全选内容的字符)
+//     */
+//    public static String replaceSpecialStr(String str) {
+//        if (str == null) {
+//            return "";
+//        }
+//
+//        StringBuilder sb = new StringBuilder();
+//        for (char c : str.toCharArray()) {
+//            if ('_' == c || Character.isLetterOrDigit(c) || Character.UnicodeBlock.of(
+//                    c) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
+//                sb.append(c);
+//            }
+//        }
+//        return sb.toString();
+//    }
 
-        StringBuilder sb = new StringBuilder();
-        for (char c : str.toCharArray()) {
-            if ('_' == c || Character.isLetterOrDigit(c) || Character.UnicodeBlock.of(
-                    c) == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS) {
-                sb.append(c);
-            }
+
+    public static <T> List<T> split(String str, Class<T> clazz) {
+        return split(str, ",", clazz, true);
+    }
+
+    public static <T> List<T> split(String str, String split, Class<T> clazz, Boolean ignoreEmpty) {
+        if (str == null || str.length() == 0) {
+            return Collections.emptyList();
         }
-        return sb.toString();
+        if (ignoreEmpty) {
+            str = str.trim();
+        }
+        Stream<String> stream = Arrays.stream(str.split(split));
+        if (ignoreEmpty) {
+            stream = stream.filter(StrUtil::isNotEmpty);
+        }
+        return stream.peek(s -> {
+            if (s.isEmpty()) {
+                throw new RuntimeException("Multi-value configurations cannot have intermediate spaces.");
+            }
+        }).map(s -> BeanUtils.convert(s, clazz)).collect(Collectors.toList());
+    }
+
+    /**
+     * 把特殊字符替换为下划线
+     * 方便快速选中一个单词一段话,快速翻译
+     */
+    public static String replaceSpecialToUnderline(String str) {
+        return (str == null) ? null : str.replaceAll("[^a-zA-Z0-9\u4e00-\u9fa5]", "_");
     }
 }

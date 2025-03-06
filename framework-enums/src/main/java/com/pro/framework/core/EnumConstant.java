@@ -1,4 +1,4 @@
-package com.pro.framework.enums;
+package com.pro.framework.core;
 
 import com.pro.framework.EnumProperties;
 import com.pro.framework.api.clazz.IConst;

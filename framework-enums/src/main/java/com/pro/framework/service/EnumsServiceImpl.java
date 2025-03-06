@@ -9,8 +9,8 @@ import com.pro.framework.api.util.AssertUtil;
 import com.pro.framework.api.util.BeanUtils;
 import com.pro.framework.api.util.CollUtils;
 import com.pro.framework.api.util.LogicUtils;
-import com.pro.framework.enums.EnumConstant;
-import com.pro.framework.enums.EnumUtil;
+import com.pro.framework.core.EnumConstant;
+import com.pro.framework.core.EnumUtil;
 import com.pro.framework.jdbc.service.IBaseService;
 import com.pro.framework.model.dto.EnumData;
 import lombok.AllArgsConstructor;
@@ -41,12 +41,13 @@ public class EnumsServiceImpl implements IEnumsService {
      */
     @Override
     public List<String> getTranslateKeys(boolean isCommon, String platform) {
-        String packagePlatform = "com.pro." + platform;
+        String packageCommon = "com.pro." + "common";
+        String packageFramework = "com.pro." + "framework";
         EnumConstant.load(enumProperties);
         Class<IEnumToDbEnum> intf = IEnumToDbEnum.class;
         List<Class> enumClasses = EnumConstant.simpleNameClassMapNoReplace.values().stream()
                 .filter(intf::isAssignableFrom)
-                .filter(c -> isCommon != c.getPackage().getName().startsWith(packagePlatform))
+                .filter(c -> isCommon == (c.getPackage().getName().startsWith(packageCommon) || c.getPackage().getName().startsWith(packageFramework)))
                 .sorted(Comparator.comparing(
                         c -> null == c.getAnnotation(EnumOrder.class) ? 100 : c.getAnnotation(EnumOrder.class).value()))
                 .collect(Collectors.toList());
@@ -54,11 +55,12 @@ public class EnumsServiceImpl implements IEnumsService {
             List<Enum> enums = EnumUtil.enumList(c);
             return enums.stream().flatMap(e -> {
                 Map<String, Object> map = EnumUtil.toMap(e);
-                String code = (String) map.get("code");
+                String title = (String) map.get("title");
+                String label = (String) map.get("label");
                 String remark = (String) map.get("remark");
                 String description = (String) map.get("description");
                 String name = (String) map.get("name");
-                return Stream.of(code, name, remark, description);
+                return Stream.of(title, label, name, remark, description);
             });
         }).distinct().toList();
     }
