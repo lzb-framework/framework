@@ -1,7 +1,6 @@
 package com.pro.framework.javatodb.service;
 
 import com.pro.framework.api.entity.IEntityProperties;
-import com.pro.framework.core.EnumUtil;
 import com.pro.framework.javatodb.annotation.JTDField;
 import com.pro.framework.javatodb.annotation.JTDFieldSql;
 import com.pro.framework.javatodb.annotation.JTDTable;
@@ -11,14 +10,13 @@ import com.pro.framework.javatodb.constant.JTDConst;
 import com.pro.framework.javatodb.constant.JTDConstInner;
 import com.pro.framework.javatodb.model.*;
 import com.pro.framework.javatodb.util.*;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.pro.framework.spring.util.ClassScanner;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.util.*;

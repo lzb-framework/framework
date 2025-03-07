@@ -20,6 +20,7 @@
         <module>framework-api</module>
         <module>framework-cache</module>
         <module>framework-enums</module>
+        <module>framework-spring</module>
         <module>framework-generator</module>
         <module>framework-java-to-db</module>
         <module>framework-java-to-db-annotations</module>

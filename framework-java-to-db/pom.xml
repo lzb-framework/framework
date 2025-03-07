@@ -27,6 +27,10 @@
             <artifactId>framework-enums</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.pro</groupId>
+            <artifactId>framework-spring</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>${swagger.annotations.version}</version>
