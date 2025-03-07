@@ -26,6 +26,11 @@ public class FrameworkConst {
 
         public static final String split_pound = "##";
         public static final String limit_1 = "limit 1";
+
+        public static class Sql {
+            public static final String NULL = "NULL";
+            public static final String CURRENT_TIMESTAMP = "CURRENT_TIMESTAMP";
+        }
     }
 
     public static class Num {

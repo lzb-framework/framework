@@ -11,8 +11,8 @@ import com.pro.framework.javatodb.constant.JTDConst;
 import com.pro.framework.javatodb.constant.JTDConstInner;
 import com.pro.framework.javatodb.model.*;
 import com.pro.framework.javatodb.util.*;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -354,7 +354,7 @@ public class JTDServiceImpl implements IJTDService {
     private static JTDTableTemp getTableAnnotation(Class<?> entityClass) {
         JTDTableTemp jtdTableTemp = new JTDTableTemp();
         initProperties(jtdTableTemp);
-        ApiModel annotation2 = AnnotationUtils.getAnnotation(entityClass, ApiModel.class);
+        Schema annotation2 = AnnotationUtils.getAnnotation(entityClass, Schema.class);
         JTDTable annotation = AnnotationUtils.getAnnotation(entityClass, JTDTable.class);
         if (annotation == null && annotation2 == null) {
             return null;
@@ -371,10 +371,10 @@ public class JTDServiceImpl implements IJTDService {
     private static JTDFieldTemp getFieldAnnotation(Field field) {
         JTDFieldTemp jtdFieldTemp = new JTDFieldTemp();
         initProperties(jtdFieldTemp);
-        ApiModelProperty annotation2 = AnnotationUtils.getAnnotation(field, ApiModelProperty.class);
+        Schema annotation2 = AnnotationUtils.getAnnotation(field, Schema.class);
         if (annotation2 != null) {
-            jtdFieldTemp.setLabel(annotation2.value());
-            jtdFieldTemp.setDescription(annotation2.notes());
+            jtdFieldTemp.setLabel(annotation2.description());
+            jtdFieldTemp.setDescription(annotation2.example());
         }
         JTDField annotation = AnnotationUtils.getAnnotation(field, JTDField.class);
         if (annotation != null) {

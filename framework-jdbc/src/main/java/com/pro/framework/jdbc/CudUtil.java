@@ -53,7 +53,7 @@
 //        CudUtil.dbBaseService = DBBaseService;
 //    }
 //
-////    public static <T> IPage<T> selectPages(String entityClassNames, IPageInput page, @RequestParam Map<String, Object> paramMap, TimeQuery timeQuery) {
+////    public static <T> IPage<T> selectPages(String entityClassNames, IPageInput page, @RequestParam(required = false) Map<String, Object> paramMap, TimeQuery timeQuery) {
 ////        List<String> entityClassNameList = Arrays.stream(entityClassNames.split(",")).collect(Collectors.toList());
 ////        Wrapper<T> wrapper = new Wrapper<>(entityClassNameList);
 ////

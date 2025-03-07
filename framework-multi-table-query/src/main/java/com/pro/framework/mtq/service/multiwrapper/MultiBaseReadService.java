@@ -91,7 +91,7 @@ public abstract class MultiBaseReadService<T> implements IMultiReadService<T> {
     @Override
     public T selectOneById(String entityClassName, Serializable id) {
         entityClassName = entityNameFilter(entityClassName);
-        Class<T> beanClass = (Class<T>) MultiClassRelationFactory.INSTANCE.getEntityClass(entityClassName);
+        Class<T> beanClass = MultiClassRelationFactory.INSTANCE.getEntityClass(entityClassName);
         return MultiExecutor.getById(beanClass, id);
     }
 

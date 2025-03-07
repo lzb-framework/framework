@@ -1,7 +1,9 @@
 package com.pro.framework.mtq.service.multiwrapper.util;
 
 import com.pro.framework.api.IReloadService;
+import com.pro.framework.api.entity.IEntityProperties;
 import com.pro.framework.api.util.AssertUtil;
+import com.pro.framework.api.util.StrUtils;
 import com.pro.framework.mtq.service.multiwrapper.entity.IMultiClassRelationService;
 import com.pro.framework.mtq.service.multiwrapper.entity.IMultiClassRelation;
 import lombok.Getter;
@@ -24,10 +26,11 @@ public class MultiClassRelationFactory implements IReloadService {
     private Map<String, IMultiClassRelation> relationCodeMap;
     private Map<String, Map<String, List<IMultiClassRelation>>> relation2ClassNameMap;
     private Map<String, Class<?>> classMap;
+    private IEntityProperties entityProperties;
 
-    public MultiClassRelationFactory(IMultiClassRelationService<?> tableRelationService) {
+    public MultiClassRelationFactory(IMultiClassRelationService<?> tableRelationService, IEntityProperties entityProperties) {
         load(tableRelationService);
-
+        this.entityProperties = entityProperties;
         INSTANCE = this;
     }
 
@@ -55,9 +58,8 @@ public class MultiClassRelationFactory implements IReloadService {
         load(tableRelationService);
     }
 
-    public Class<?> getEntityClass(String entityClassName) {
-        Class<?> aClass = classMap.get(entityClassName);
-        AssertUtil.notEmpty(aClass, "无效请求");
-        return aClass;
+    public <T> Class<T> getEntityClass(String entityClassName) {
+        //noinspection unchecked
+        return (Class<T>) entityProperties.getEntityClassReplaceMap().computeIfAbsent(entityClassName, c -> classMap.get(entityClassName));
     }
 }

@@ -50,7 +50,7 @@ public class MultiWrapper<MAIN> {
     public MultiWrapper(String mainClass, String... subClass) {
         //noinspection unchecked
         this(
-                MultiWrapperMain.lambda(AssertUtil.notEmpty((Class<MAIN>) MultiClassRelationFactory.INSTANCE.getEntityClass(mainClass), "class not exit:"+mainClass)),
+                MultiWrapperMain.lambda(AssertUtil.notEmpty(MultiClassRelationFactory.INSTANCE.getEntityClass(mainClass), "class not exit:"+mainClass)),
                 Arrays.stream(subClass).map(c -> MultiClassRelationFactory.INSTANCE.getEntityClass(c)).toArray(Class<?>[]::new)
         );
     }

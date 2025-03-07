@@ -1,6 +1,7 @@
 package com.pro.framework.mtq.service.multiwrapper.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pro.framework.api.entity.IEntityProperties;
 import com.pro.framework.api.util.JSONUtils;
 import com.pro.framework.mtq.service.multiwrapper.entity.IMultiClassRelationService;
 import com.pro.framework.jdbc.sqlexecutor.DbAdaptor;
@@ -31,7 +32,8 @@ public class BaseMultiConfig {
     public MultiClassRelationFactory multiClassRelationFactory(
             MultiProperties multiProperties,
             DbAdaptor dbAdaptor,
-            ObjectProvider<IMultiClassRelationService> multiTableRelationServiceProvider
+            ObjectProvider<IMultiClassRelationService> multiTableRelationServiceProvider,
+            IEntityProperties entityProperties
     ) {
         if (false) {
             return null;
@@ -43,6 +45,6 @@ public class BaseMultiConfig {
         BaseMultiConfig.multiProperties = multiProperties;
         BaseMultiConfig.multiDbAdaptor = dbAdaptor;
         log.info("加载multiClassRelationFactory");
-        return new MultiClassRelationFactory(Objects.requireNonNull(multiTableRelationServiceProvider.getIfAvailable(), "请先实现 IMultiClassRelationService "));
+        return new MultiClassRelationFactory(Objects.requireNonNull(multiTableRelationServiceProvider.getIfAvailable(), "请先实现 IMultiClassRelationService "),entityProperties);
     }
 }
