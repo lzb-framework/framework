@@ -82,6 +82,7 @@ public class UITableInfo {
         private Boolean hide;
         private Boolean isEdit;
         private List<String> fieldNames;
+        private String entityName;
         private String tableName;
         private String label;
         private EnumPositionAlign labelPosition;
