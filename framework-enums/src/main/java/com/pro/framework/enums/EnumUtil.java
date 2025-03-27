@@ -1,4 +1,4 @@
-package com.pro.framework.core;
+package com.pro.framework.enums;
 
 import com.pro.framework.api.enums.IEnum;
 import lombok.SneakyThrows;
@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -101,10 +100,7 @@ public class EnumUtil {
         if (IEnum.class.isAssignableFrom(t.getClass())) {
             return ((IEnum) t).getLabel();
         }
-        Field label = getField(t.getClass(),EnumUtil.FIELD_LABEL);
-        if (label == null) {
-            return null;
-        }
+        Field label = t.getClass().getDeclaredField(EnumUtil.FIELD_LABEL);
         label.setAccessible(true);
         return (String) label.get(t);
     }
@@ -135,19 +131,5 @@ public class EnumUtil {
         char[] charArray = str.toCharArray();
         charArray[0] = Character.toLowerCase(charArray[0]);
         return new String(charArray);
-    }
-    private static final ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Field>> fieldCache = new ConcurrentHashMap<>();
-
-    public static Field getField(Class<?> clazz, String fieldName) {
-        return fieldCache
-                .computeIfAbsent(clazz, k -> {
-                    ConcurrentHashMap<String, Field> map = new ConcurrentHashMap<>();
-                    for (Field field : k.getDeclaredFields()) {
-                        field.setAccessible(true);
-                        map.put(field.getName(), field);
-                    }
-                    return map;
-                })
-                .get(fieldName);
     }
 }

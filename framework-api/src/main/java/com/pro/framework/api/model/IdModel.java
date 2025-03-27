@@ -1,7 +1,6 @@
 package com.pro.framework.api.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,7 @@ import java.time.LocalDateTime;
 public class IdModel implements IModel{
     private static final long serialVersionUID = 100L;
 
-//    @Schema(description = "主键id")
-    @Schema(description = "主键id")
+    @ApiModelProperty(value = "主键id")
 //    @TableId
     protected Long id;
 }

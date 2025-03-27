@@ -1,6 +1,7 @@
 package com.pro.framework.javatodb.service;
 
 import com.pro.framework.api.entity.IEntityProperties;
+import com.pro.framework.enums.EnumUtil;
 import com.pro.framework.javatodb.annotation.JTDField;
 import com.pro.framework.javatodb.annotation.JTDFieldSql;
 import com.pro.framework.javatodb.annotation.JTDTable;
@@ -10,13 +11,14 @@ import com.pro.framework.javatodb.constant.JTDConst;
 import com.pro.framework.javatodb.constant.JTDConstInner;
 import com.pro.framework.javatodb.model.*;
 import com.pro.framework.javatodb.util.*;
-import com.pro.framework.spring.util.ClassScanner;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationUtils;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.util.*;
@@ -352,7 +354,7 @@ public class JTDServiceImpl implements IJTDService {
     private static JTDTableTemp getTableAnnotation(Class<?> entityClass) {
         JTDTableTemp jtdTableTemp = new JTDTableTemp();
         initProperties(jtdTableTemp);
-        Schema annotation2 = AnnotationUtils.getAnnotation(entityClass, Schema.class);
+        ApiModel annotation2 = AnnotationUtils.getAnnotation(entityClass, ApiModel.class);
         JTDTable annotation = AnnotationUtils.getAnnotation(entityClass, JTDTable.class);
         if (annotation == null && annotation2 == null) {
             return null;
@@ -369,10 +371,10 @@ public class JTDServiceImpl implements IJTDService {
     private static JTDFieldTemp getFieldAnnotation(Field field) {
         JTDFieldTemp jtdFieldTemp = new JTDFieldTemp();
         initProperties(jtdFieldTemp);
-        Schema annotation2 = AnnotationUtils.getAnnotation(field, Schema.class);
+        ApiModelProperty annotation2 = AnnotationUtils.getAnnotation(field, ApiModelProperty.class);
         if (annotation2 != null) {
-            jtdFieldTemp.setLabel(annotation2.description());
-            jtdFieldTemp.setDescription(annotation2.example());
+            jtdFieldTemp.setLabel(annotation2.value());
+            jtdFieldTemp.setDescription(annotation2.notes());
         }
         JTDField annotation = AnnotationUtils.getAnnotation(field, JTDField.class);
         if (annotation != null) {

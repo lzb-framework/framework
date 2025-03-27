@@ -3,8 +3,7 @@ package com.pro.framework.javatodb.model;
 import com.pro.framework.javatodb.constant.JTDConst;
 import com.pro.framework.javatodb.enums.EnumPositionAlign;
 import com.pro.framework.javatodb.enums.EnumUIArea;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -45,7 +44,7 @@ import java.util.Map;
  * // }
  */
 @Data
-@Schema(description = "表信息对象")
+@ApiModel(description = "表信息对象")
 public class UITableInfo {
     /**
      * 整表性配置信息
@@ -82,7 +81,6 @@ public class UITableInfo {
         private Boolean hide;
         private Boolean isEdit;
         private List<String> fieldNames;
-        private String entityName;
         private String tableName;
         private String label;
         private EnumPositionAlign labelPosition;

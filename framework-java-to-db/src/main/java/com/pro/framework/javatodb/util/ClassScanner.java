@@ -1,4 +1,4 @@
-package com.pro.framework.spring.util;
+package com.pro.framework.javatodb.util;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
