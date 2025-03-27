@@ -47,7 +47,7 @@ public class DBBaseService<T extends IModel> implements IBaseService<T> {
 
     @SneakyThrows
     private <T> List<T> executeQuery(String sql, Function<ResultSet, T> function) {
-        log.trace("Multi 查询Sql:\n {}", sql);
+        log.info("Multi 查询Sql:\n {}", sql);
         @Cleanup Connection conn = multiDbAdaptor.getConnection();
         @Cleanup Statement stmt = conn.createStatement();
         @Cleanup ResultSet rs = null;
@@ -147,6 +147,9 @@ public class DBBaseService<T extends IModel> implements IBaseService<T> {
         // Iterate through each field and set its value from the ResultSet
         for (Field field : fields) {
             field.setAccessible(true); // Ensure that private fields can be accessed
+            if ("MyExecuteTemplate".equals(clazz.getSimpleName())) {
+                int i = 0;
+            }
             Object value = getValue(StrUtils.camelToUnderline(field.getName()), field.getType(), resultSet);
             field.set(entity, value); // Set the field value in the entity object
         }
@@ -603,7 +606,7 @@ public class DBBaseService<T extends IModel> implements IBaseService<T> {
             default:
                 if (Enum.class.isAssignableFrom(type)) {
                     String value = resultSet.getString(fieldName);
-                    return Enum.valueOf((Class<Enum>) type, value);
+                    return null == value ? null : Enum.valueOf((Class<Enum>) type, value);
                 }
                 throw new IllegalArgumentException("Unsupported data type: " + type.getSimpleName());
         }
@@ -641,7 +644,7 @@ public class DBBaseService<T extends IModel> implements IBaseService<T> {
             default:
                 if (Enum.class.isAssignableFrom(type)) {
                     String value = resultSet.getString(i);
-                    return Enum.valueOf((Class<Enum>) type, value);
+                    return null == value ? null : Enum.valueOf((Class<Enum>) type, value);
                 }
                 throw new IllegalArgumentException("Unsupported data type: " + type.getSimpleName());
         }
