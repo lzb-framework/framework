@@ -26,7 +26,6 @@ public class FrameworkConst {
 
         public static final String split_pound = "##";
         public static final String limit_1 = "limit 1";
-        public static final String file_separator = "/";
     }
 
     public static class Num {

@@ -4,7 +4,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
-import com.pro.framework.api.FrameworkConst;
 import com.pro.framework.api.util.StrUtils;
 import com.pro.framework.javatodb.annotation.JTDTable;
 import com.pro.framework.javatodb.config.JTDProperties;
@@ -70,7 +69,7 @@ public abstract class AbsGenerator {
         File templateSourceFile = new File(demoFilePath);
         File templateFileFolder = new File(templateBasePath);
         templateFileFolder.mkdirs();
-        File templateFile = new File(templateBasePath + FrameworkConst.Str.file_separator + templateSourceFile.getName() + ".vm");
+        File templateFile = new File(templateBasePath + File.separator + templateSourceFile.getName() + ".vm");
         // 1.用模板的模板DemoDao.java 去更新模板DemoDao.java.vm
         initTemplateFromDemo(templateSourceFile, templateFile);
         // 2.用新模板DemoDao.java.vm 去生成代码XXXDao.java
@@ -350,7 +349,7 @@ public abstract class AbsGenerator {
             JTDAssertUtil.true_(outFile.getParentFile().mkdirs(), "创建文件目录失败:" + outputFile);
         }
         Template template = velocityEngine.getTemplate(templatePath, StandardCharsets.UTF_8.name());
-//        Template template = velocityEngine.getTemplate(templateBasePath + FrameworkConst.Str.file_separator + templatePath, StandardCharsets.UTF_8.name());
+//        Template template = velocityEngine.getTemplate(templateBasePath + File.separator + templatePath, StandardCharsets.UTF_8.name());
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(outputFile);

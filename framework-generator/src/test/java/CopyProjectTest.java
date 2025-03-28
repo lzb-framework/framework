@@ -1,7 +1,6 @@
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.pro.framework.api.FrameworkConst;
 import com.pro.framework.api.util.JSONUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,9 +48,9 @@ public class CopyProjectTest {
 //        Thread.sleep(1000);
 
         // 3.初始化 git
-        executeCommand(destinationPath + FrameworkConst.Str.file_separator + "platform", getInitGitCommands("git@github.com:lzb-demo/platform.git"));
-        executeCommand(destinationPath + FrameworkConst.Str.file_separator + "ui-user", getInitGitCommands("git@github.com:lzb-demo/ui-user.git"));
-        executeCommand(destinationPath + FrameworkConst.Str.file_separator + "ui-admin", getInitGitCommands("git@github.com:lzb-demo/ui-admin.git"));
+        executeCommand(destinationPath + File.separator + "platform", getInitGitCommands("git@github.com:lzb-demo/platform.git"));
+        executeCommand(destinationPath + File.separator + "ui-user", getInitGitCommands("git@github.com:lzb-demo/ui-user.git"));
+        executeCommand(destinationPath + File.separator + "ui-admin", getInitGitCommands("git@github.com:lzb-demo/ui-admin.git"));
 
         //        executeCommand(destinationPath + "/" + "ui-agent", getInitGitCommands("git@github.com:lzb-demo/ui-agent.git"));
     }
@@ -292,7 +291,7 @@ public class CopyProjectTest {
                         renameFile(file, destinationPath);
                     } else if (file.isDirectory()) {
                         // 递归处理子文件夹
-                        renameFolderWithFiles(file.getAbsolutePath(), destinationPath + FrameworkConst.Str.file_separator + file.getName());
+                        renameFolderWithFiles(file.getAbsolutePath(), destinationPath + File.separator + file.getName());
                     }
                 }
 
