@@ -4,6 +4,7 @@ import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.pro.framework.api.FrameworkConst;
 import com.pro.framework.api.model.GeneratorDevConfig;
 import com.pro.framework.generator.main.generator.AbsGenerator;
 import com.pro.framework.generator.utils.StringFormater;
@@ -33,7 +34,7 @@ public class GeneratorUtil_ui_admin extends AbsGenerator {
         generate(classes,
                 StringFormater.format("{workspace}/{platformName}/framework/framework-generator/src/main/resources/templates/demoAdminVue.vue", generatorConfig),
                 (clazz) ->
-                        StringFormater.format("{workspace}/{platformName}/ui-admin/src/views/" + getModule(clazz, "sys") + File.separator + StrUtil.lowerFirst(clazz.getSimpleName()) + ".vue", generatorConfig)
+                        StringFormater.format("{workspace}/{platformName}/ui-admin/src/views/" + getModule(clazz, "sys") + FrameworkConst.Str.file_separator + StrUtil.lowerFirst(clazz.getSimpleName()) + ".vue", generatorConfig)
         );
     }
 }
