@@ -43,7 +43,8 @@ public class JTDJDBCBaseAdaptor implements JTDAdaptor {
     public <T> List<T> executeQuery(String sql, Function<ResultSet, T> function) {
         log.trace("Multi 查询Sql:\n {}", sql);
 
-        @Cleanup Connection conn = DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
+        @Cleanup Connection conn = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
+                properties.getPassword());
         @Cleanup Statement stmt = conn.createStatement();
         @Cleanup ResultSet rs = stmt.executeQuery(sql);
         if (function == null) {
@@ -62,7 +63,8 @@ public class JTDJDBCBaseAdaptor implements JTDAdaptor {
         if (JTDUtil.isBlank(sql)) {
             return false;
         }
-        @Cleanup Connection conn = DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
+        @Cleanup Connection conn = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
+                properties.getPassword());
         @Cleanup Statement stmt = conn.createStatement();
         return stmt.execute(sql);
     }
@@ -79,7 +81,7 @@ public class JTDJDBCBaseAdaptor implements JTDAdaptor {
         String password = properties.getPassword();
 
         // 创建数据库的 SQL 语句
-        String createDatabaseSQL = "CREATE DATABASE IF NOT EXISTS " + dbName;
+        String createDatabaseSQL = "CREATE DATABASE IF NOT EXISTS `" + dbName + "`";
 
         @Cleanup Connection connection = DriverManager.getConnection(url, user, password);
         @Cleanup Statement statement = connection.createStatement();
