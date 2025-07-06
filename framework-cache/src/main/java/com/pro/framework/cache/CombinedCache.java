@@ -84,7 +84,7 @@ public class CombinedCache extends AbstractValueAdaptingCache implements Cache {
      */
     @Override
     public void put(Object key, Object value) {
-        System.out.println("put " + key + " " + value.hashCode());
+//        System.out.println("put " + key + " " + value.hashCode());
         // 将数据放入一级缓存，并通知所有分布式服务器更新二级缓存
         for (CacheManager cacheManager : cacheManagers) {
             cacheManager.getCache(name).put(key, value);
